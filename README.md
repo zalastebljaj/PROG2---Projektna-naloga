@@ -1,1 +1,1 @@
-# PROG2---Projektna-naloga
+# PROG2-ProjektnaNaloga
