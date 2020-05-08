@@ -49,18 +49,20 @@ public class Igra {
 			if (noviY < N && noviX > 0) sosedi.add(new Koordinati(noviX - 1, noviY + 1));
 			if (noviY > 0 && noviX < N) sosedi.add(new Koordinati(noviX + 1, noviY - 1));
 			for (Koordinati k : sosedi) {
-				if (k.getY() == N && plosca[k.getX()][k.getY()] == r) {
-					x.add(prejsnjiX); x.add(noviX);
-					y.add(prejsnjiY); y.add(noviY);
-					return new Pot(x, y);
-				}
-				else if ((k.getX() != prejsnjiX || k.getY() != prejsnjiY) && plosca[k.getX()][k.getY()] == r) {
-					x.add(prejsnjiX);
-					y.add(prejsnjiY);
-					prejsnjiX = noviX;
-					prejsnjiY = noviY;
-					noviX = k.getX();
-					noviY = k.getY();	
+				if (plosca[k.getX()][k.getY()] == r) {
+					if ((k.getY() == N && r == Polje.R) || (k.getX() == N && r == Polje.M)) {
+						x.add(prejsnjiX); x.add(noviX);
+						y.add(prejsnjiY); y.add(noviY);
+						return new Pot(x, y);
+					}
+					else if ((k.getX() != prejsnjiX || k.getY() != prejsnjiY) && plosca[k.getX()][k.getY()] == r) {
+						x.add(prejsnjiX);
+						y.add(prejsnjiY);
+						prejsnjiX = noviX;
+						prejsnjiY = noviY;
+						noviX = k.getX();
+						noviY = k.getY();	
+					}
 				}
 				else return null;
 			}
