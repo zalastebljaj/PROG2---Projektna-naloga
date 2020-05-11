@@ -4,12 +4,18 @@ import java.util.*;
 
 public class Igra {
 	
-	//Zaenkrat se konstantno dolocena velikost 11*11
-	public static final int N = 11;
+	//Velikost igralne plosce
+	public int N;
+	//Igralna plosca
 	private Polje[][] plosca;
+	//Kdo je na potezi
 	public Igralec naPotezi;
+	//Seznam ze odigranih potez
+	public LinkedList<Koordinati> odigranePoteze;
 	
+	//Osnovni konstruktor, ki naredi igro s poljem 11*11
 	public Igra() {
+		N = 11;
 		plosca = new Polje[N][N];
 		for (int i = 0; i < N; ++i) {
 			for (int j = 0; j < N; ++j) {
@@ -17,6 +23,20 @@ public class Igra {
 			}
 		}
 		naPotezi = Igralec.R;
+		odigranePoteze = new LinkedList<Koordinati>();
+	}
+	
+	//Konstruktor, ki vzame N kot parameter in naredi igro s poljem velikosti N*N
+	public Igra(int N) {
+		this.N = N;
+		plosca = new Polje[N][N];
+		for (int i = 0; i < N; ++i) {
+			for (int j = 0; j < N; ++j) {
+				plosca[i][j] = Polje.PRAZNO;
+			}
+		}
+		naPotezi = Igralec.R;
+		odigranePoteze = new LinkedList<Koordinati>();
 	}
 	
 	//Vrne seznam vseh moznih potez(polja, ki so se prazna)
@@ -102,9 +122,18 @@ public class Igra {
 		if (plosca[k.getX()][k.getY()] == Polje.PRAZNO) {
 			plosca[k.getX()][k.getY()] = naPotezi.getPolje();
 			naPotezi = naPotezi.nasprotnik();
+			odigranePoteze.addLast(k);
 			return true;
 		}
 		else return false;
+	}
+	
+	//Razveljavi zadnjo potezo
+	public void razveljavi() {
+		Koordinati k = odigranePoteze.getLast();
+		plosca[k.getX()][k.getY()] = Polje.PRAZNO;
+		odigranePoteze.removeLast();
+		naPotezi = naPotezi.nasprotnik();
 	}
 
 }
