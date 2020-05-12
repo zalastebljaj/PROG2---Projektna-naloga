@@ -40,7 +40,7 @@ public class Igra {
 	}
 	
 	//Vrne seznam vseh moznih potez(polja, ki so se prazna)
-	public List<Koordinati> moznePoteze() {
+	public LinkedList<Koordinati> moznePoteze() {
 		LinkedList<Koordinati> mp = new LinkedList<Koordinati>();
 		for (int i = 0; i < N; ++i) {
 			for (int j = 0; j < N; ++j) {
