@@ -15,8 +15,8 @@ public class Okno extends JFrame implements ActionListener{
 	public Platno platno; 
 	
 	private JMenuBar menuBar;
-	private JMenu lastnostiIgre, lastnostiIgralcev, lastnostiVmesnika;
-	private JMenuItem velikost, imeIgralcev, vrstaIgralcev, algoritemIgranja,
+	private JMenu igra, lastnostiIgre, lastnostiIgralcev, lastnostiVmesnika;
+	private JMenuItem novaIgra, velikost, imeIgralcev, vrstaIgralcev, algoritemIgranja,
 		trajanje, barva;
 	
 	public Okno(int sirina, int visina) {
@@ -27,6 +27,12 @@ public class Okno extends JFrame implements ActionListener{
 		this.add(glavnaPlosca);
 		
 		menuBar = new JMenuBar();
+		
+		igra = new JMenu("Igra");
+		novaIgra = new JMenuItem("Nova igra");
+		novaIgra.addActionListener(this);
+		igra.add(novaIgra);
+		menuBar.add(igra);
 		
 		lastnostiIgre = new JMenu("Lastnosti igre"); 
 		velikost = new JMenuItem("Velikost"); 
@@ -64,7 +70,9 @@ public class Okno extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == velikost) {
+		if (e.getSource() == novaIgra) {
+		}
+		else if (e.getSource() == velikost) {
 			// TODO 
 		}
 		else if (e.getSource() == imeIgralcev) { 

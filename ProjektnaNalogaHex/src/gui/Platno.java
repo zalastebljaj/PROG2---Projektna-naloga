@@ -37,17 +37,17 @@ public class Platno extends JPanel implements MouseListener, MouseMotionListener
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 	    Graphics2D g2 = (Graphics2D) g;
-	    // Narejeno za silo 
-	    for (int a = 1; a < 12; a++) {
-	    	for (int b = 1; b < 12; b++) {
+	    int stranica = 25;
+	    for (int a = 0; a < 11; a++) {
+	    	for (int b = 0; b < 11; b ++) {
 	    		Polygon p = new Polygon();
-	            for (int i = 0; i < 6; i++) {
-	                p.addPoint((int) (a * 50 + 25 * Math.cos(i * 2 * Math.PI / 6)),
-	                  (int) (b * 50 + 25 * Math.sin(i * 2 * Math.PI / 6)));    
-	            }
-	            g.drawPolygon(p); 
+		        for (int i = 0; i < 6; i++) {
+		            p.addPoint((int) (100 + b * stranica * Math.sqrt(3.) + a * stranica * Math.sqrt(3.) / 2 + stranica * Math.sin(i * 2 * Math.PI / 6)),
+		              (int) (100 + a * stranica * 1.5 + stranica * Math.cos(i * 2 * Math.PI / 6)));    
+		        }
+		        g.drawPolygon(p); 
 	    	}
-	    }  
+	    }
 		this.repaint();
 	}
 
@@ -58,12 +58,13 @@ public class Platno extends JPanel implements MouseListener, MouseMotionListener
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// Nerabim 
+		// Nerabim
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO 
+		int x = e.getX();
+		int y = e.getY();
 	}
 
 	@Override
