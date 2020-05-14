@@ -10,7 +10,7 @@ public class Igra {
 	private Polje[][] plosca;
 	//Kdo je na potezi
 	public Igralec naPotezi;
-	//Seznam ze odigranih potez
+	//Seznam koordinat ze odigranih potez
 	public LinkedList<Koordinati> odigranePoteze;
 	
 	//Osnovni konstruktor, ki naredi igro s poljem 11*11
@@ -65,13 +65,12 @@ public class Igra {
 		for (Koordinati k : sosedi) {
 			if (plosca[k.getX()][k.getY()] == barva) {
 				if ((k.getY() == N && barva == Polje.R) || (k.getX() == N && barva == Polje.M)) {
-					koordinate.add(new Koordinati(prejsnjiX, prejsnjiY));
 					koordinate.add(new Koordinati(noviX, noviY));
-					koordinate.add(new Koordinati(k.getX(), k.getY()));
+					koordinate.add(k);
 					return new Pot(koordinate);
 				}
-				else if ((k.getX() != prejsnjiX || k.getY() != prejsnjiY)) {
-					koordinate.add(new Koordinati(prejsnjiX, prejsnjiY));
+				else if (koordinate.contains(k) == false) {
+					koordinate.add(new Koordinati(noviX, noviY));
 					return pot(noviX, noviY, k.getX(), k.getY(), barva);	
 				}
 			}
