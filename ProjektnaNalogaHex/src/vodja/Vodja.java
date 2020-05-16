@@ -15,9 +15,9 @@ import gui.*;
 public class Vodja {
 	
 	//Slovar s kljuèema R(rdeci) in M(modri), ki imata za vrednosti vrsto igralca(CLOVEK\RACUNALNIK)
-	public static Map<Igralec, VrstaIgralca> vrstaIgralca;
+	public static HashMap<Igralec, VrstaIgralca> vrstaIgralca;
 	//Igralcu priredimo njegovo barvo
-	public static Map<Igralec, Color> barvaIgralca;
+	public static HashMap<Igralec, Color> barvaIgralca;
 	//Igralcu priredimo njegovo ime
 	public static HashMap<Igralec, String> imeIgralca;
 	
@@ -49,7 +49,7 @@ public class Vodja {
 	}
 	
 	public static void igramo() {
-		//okno.osveziGUI();
+		okno.osveziGUI();
 		switch (igra.stanje()) {
 		case ZMAGA_R :
 		case ZMAGA_M :

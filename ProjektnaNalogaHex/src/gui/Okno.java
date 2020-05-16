@@ -33,11 +33,7 @@ public class Okno extends JFrame implements ActionListener{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLayout(new GridBagLayout());
 		
-//		
-//		JPanel glavnaPlosca = new JPanel();
-//		glavnaPlosca.setLayout(new BoxLayout(glavnaPlosca, BoxLayout.Y_AXIS));
-//		this.add(glavnaPlosca);
-		
+		// Menu
 		menuBar = new JMenuBar();
 		
 		novaIgra = new JMenu("Nova igra");
@@ -84,6 +80,7 @@ public class Okno extends JFrame implements ActionListener{
 		
 		this.setJMenuBar(menuBar);
 		
+		// Igralno polje
 		polje = new IgralnoPolje();
 		
 		GridBagConstraints polje_layout = new GridBagConstraints(); 
@@ -94,6 +91,7 @@ public class Okno extends JFrame implements ActionListener{
 		polje_layout.weighty = 1.0;
 		getContentPane().add(polje, polje_layout);
 		
+		// Status 
 		status = new JLabel();
 		GridBagConstraints status_layout = new GridBagConstraints(); 
 		status_layout.gridx = 0; 
@@ -101,11 +99,11 @@ public class Okno extends JFrame implements ActionListener{
 		status_layout.anchor = GridBagConstraints.CENTER;
 		getContentPane().add(status, status_layout); 
 		
-		status.setText("Zaèni novo igro!");
+		status.setText("Izberite igro!");
 		
 	}
 	
-
+	// Klik v menu
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == CC) {
@@ -138,35 +136,36 @@ public class Okno extends JFrame implements ActionListener{
 			Vodja.cas = N;
 		}
 		else if (e.getSource() == barva) { 
-			System.out.println(Vodja.barvaIgralca);
 			Color novaBarvaEna = JColorChooser.showDialog(this, "Izberi barvo prvega igralca",
 					Vodja.barvaIgralca.get(logika.Igralec.R));
 			Color novaBarvaDva = JColorChooser.showDialog(this, "Izberite barvo drugega igralca",
 					Vodja.barvaIgralca.get(logika.Igralec.M));
 			Vodja.barvaIgralca.replace(logika.Igralec.R, novaBarvaEna);
 			Vodja.barvaIgralca.replace(logika.Igralec.M, novaBarvaDva);
-			System.out.println(Vodja.barvaIgralca);
 		}
 		
 	}
 	
-//	public void osveziGUI {
-//		if (Vodja.igra == null) { status.setText("Igra ni v teku.");}
-//		else { 
-//			switch(Vodja.igra.stanje()) {
-//			case V_TEKU: 
-//				status.setText("Na Potezi je " + Vodja.igra.naPotezi + " - " + Vodja.vrstaIgralca.get(Vodja.igra.naPotezi));
-//				break;
-//			case ZMAGA_R:
-//				status.setText("Zmagal je O - " + Vodja.vrstaIgralca.get(Vodja.igra.naPotezi.nasprotnik()));
-//				break;
-//			case ZMAGA_M: 
-//				status.setText("Zmegal je X - " + Vodja.vrstaIgralca.get(Vodja.igra.naPotezi.nasprotnik()));
-//				break;
-//			}
-//		}
-//		polje.repaint();
-//	}
+	// Osvezimo GUI
+	public void osveziGUI() {
+		if (Vodja.igra != null) {status.setText("Izberite igro!");}
+		else {
+			switch(Vodja.igra.stanje()) {
+			case V_TEKU:
+				status.setText("Na potezi je");
+				break;
+			case ZMAGA_R:
+				status.setText("Zmaga R");
+				break;
+			case ZMAGA_M:
+				status.setText("Zmaga M");
+				break;
+			}
+		}
+		polje.repaint();
+	}
+	
+	
 	
 
 }
