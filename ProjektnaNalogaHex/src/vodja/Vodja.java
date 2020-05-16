@@ -9,7 +9,7 @@ import javax.swing.SwingWorker;
 import java.awt.*;
 
 import logika.*;
-
+import splosno.Koordinati;
 import gui.*;
 
 public class Vodja {
