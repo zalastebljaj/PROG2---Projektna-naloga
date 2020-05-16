@@ -1,7 +1,7 @@
 package gui;
 
 import logika.Igra;
-import logika.Koordinati;
+import splosno.Koordinati;
 import vodja.Vodja;
 
 import java.awt.BasicStroke;

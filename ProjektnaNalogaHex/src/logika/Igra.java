@@ -2,6 +2,8 @@ package logika;
 
 import java.util.*;
 
+import splosno.Koordinati;
+
 public class Igra {
 	
 	//Velikost igralne plosce
