@@ -5,7 +5,7 @@ import java.util.*;
 public class Igra {
 	
 	//Velikost igralne plosce
-	public static int N;
+	public int N;
 	//Igralna plosca
 	private Polje[][] plosca;
 	//Kdo je na potezi

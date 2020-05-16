@@ -35,54 +35,52 @@ public class IgralnoPolje extends JPanel implements MouseListener{
 	private final static double LINE_WIDTH = 0.01; 
 	
 	private double stranica() {
-		return Math.min(getWidth(), getHeight()) / 22;
+		return Math.min(getWidth(), getHeight()) / (3 * 11);
 	}
 	
 	@Override 
 	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-	    Graphics2D g2 = (Graphics2D) g;
-	    double stranica = stranica();
-	    for (int a = 0; a < 11; a++) {
-	    	for (int b = 0; b < 11; b ++) {
-	    		Polygon p = new Polygon();
-		        for (int i = 0; i < 6; i++) {
-		            p.addPoint((int) (2 * stranica + b * stranica * Math.sqrt(3.) + a * stranica * Math.sqrt(3.) / 2 + stranica * Math.sin(i * 2 * Math.PI / 6)),
-		              (int) (2 * stranica + a * stranica * 1.5 + stranica * Math.cos(i * 2 * Math.PI / 6)));    
-		        }
-		        g.drawPolygon(p); 
-	    	}
+		if (Vodja.igra != null) {
+			super.paintComponent(g);
+		    Graphics2D g2 = (Graphics2D) g;
+		    double stranica = stranica();
+		    for (int a = 0; a < Vodja.igra.N; a++) {
+		    	for (int b = 0; b < Vodja.igra.N; b ++) {
+		    		Polygon p = new Polygon();
+			        for (int i = 0; i < 6; i++) {
+			            p.addPoint((int) (b * stranica * Math.sqrt(3.) + a * stranica * Math.sqrt(3.) / 2 + stranica * Math.sin(i * 2 * Math.PI / 6)),
+			              (int) (a * stranica * 1.5 + stranica * Math.cos(i * 2 * Math.PI / 6)));    
+			        }
+			        g.drawPolygon(p); 
+		    	}	
+		    }
 	    }
+		else {
+			super.paintComponent(g);
+			Graphics2D g2 = (Graphics2D) g;
+		}
 		this.repaint();
 	}
 
 	@Override
-	public void mouseDragged(MouseEvent e) {
-		// Nerabim 
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// Nerabim
-	}
-
-	@Override
 	public void mouseClicked(MouseEvent e) {
+//			System.out.println(Vodja.igra.N); 
 			int x = e.getX();
 			int y = e.getY();
 			int w = (int)(stranica());
-			int i = x / w ;
+			int i = x / (w) ;
 			double di = (x % w) / stranica() ;
-			int j = y / w ;
+			int j = y / (w) ;
 			double dj = (y % w) / stranica() ;
-			if (0 <= i && i < 11 &&
-					0.5 * LINE_WIDTH < di && di < 1.0 - 0.5 * LINE_WIDTH &&
-					0 <= j && j < Igra.N && 
-					0.5 * LINE_WIDTH < dj && dj < 1.0 - 0.5 * LINE_WIDTH) {
-				System.out.print(i);
-				System.out.println(j);
-//				Vodja.igrajClovekovoPotezo (new Koordinati(i, j));
-			}
+			System.out.println("" + i + " " + j);
+//			if (0 <= i && i < 11 &&
+//					0.5 * LINE_WIDTH < di && di < 1.0 - 0.5 * LINE_WIDTH &&
+//					0 <= j && j < Vodja.igra.N && 
+//					0.5 * LINE_WIDTH < dj && dj < 1.0 - 0.5 * LINE_WIDTH) {
+//				System.out.print(i);
+//				System.out.println(j);
+//				Vodja.igrajClovekovoPotezo(new Koordinati(i, j));
+//			}
 	}
 
 	@Override

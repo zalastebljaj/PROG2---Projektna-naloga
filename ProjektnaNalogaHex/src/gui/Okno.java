@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import vodja.Vodja;
@@ -22,8 +23,8 @@ public class Okno extends JFrame implements ActionListener{
 	public IgralnoPolje polje; 
 	
 	private JMenuBar menuBar;
-	private JMenu igra, lastnostiIgre, lastnostiIgralcev, lastnostiVmesnika;
-	private JMenuItem novaIgra, velikost, imeIgralcev, vrstaIgralcev, algoritemIgranja,
+	private JMenu novaIgra, lastnostiIgre, lastnostiIgralcev, lastnostiVmesnika;
+	private JMenuItem CC, CR, RC, RR , velikost, imeIgralcev, vrstaIgralcev, algoritemIgranja,
 		trajanje, barva;
 	private JLabel status;
 	
@@ -39,11 +40,20 @@ public class Okno extends JFrame implements ActionListener{
 		
 		menuBar = new JMenuBar();
 		
-		igra = new JMenu("Igra");
-		novaIgra = new JMenuItem("Nova igra");
-		novaIgra.addActionListener(this);
-		igra.add(novaIgra);
-		menuBar.add(igra);
+		novaIgra = new JMenu("Nova igra");
+		CC = new JMenuItem("Èlovek - Èlovek");
+		CC.addActionListener(this);
+		RC = new JMenuItem("Raèunalnik - Èlovek");
+		RC.addActionListener(this);
+		CR = new JMenuItem("Èlovek - Raèunalnik"); 
+		RC.addActionListener(this);
+		RR = new JMenuItem("Raèunalnik - Raèunalnik"); 
+		RR.addActionListener(this);
+		novaIgra.add(CC);
+		novaIgra.add(RC); 
+		novaIgra.add(CR); 
+		novaIgra.add(RR);
+		menuBar.add(novaIgra);
 		
 		lastnostiIgre = new JMenu("Lastnosti igre"); 
 		velikost = new JMenuItem("Velikost"); 
@@ -98,11 +108,21 @@ public class Okno extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == novaIgra) {
-			// TODO
+		if (e.getSource() == CC) {
+			Vodja.igramoNovoIgro(vodja.VrstaIgralca.CLOVEK, vodja.VrstaIgralca.CLOVEK);
+		}
+		else if (e.getSource() == CR) {
+			Vodja.igramoNovoIgro(vodja.VrstaIgralca.CLOVEK, vodja.VrstaIgralca.RACUNALNIK);
+		}
+		else if (e.getSource() == RC) {
+			Vodja.igramoNovoIgro(vodja.VrstaIgralca.RACUNALNIK, vodja.VrstaIgralca.CLOVEK);
+		}
+		else if (e.getSource() == RR) {
+			Vodja.igramoNovoIgro(vodja.VrstaIgralca.RACUNALNIK, vodja.VrstaIgralca.RACUNALNIK);
 		}
 		else if (e.getSource() == velikost) {
-			// TODO 
+			int N = Integer.parseInt(JOptionPane.showInputDialog("Velikost igralnega polja: "));
+			Vodja.igramoNovoIgro(N, vodja.VrstaIgralca.CLOVEK, vodja.VrstaIgralca.RACUNALNIK);
 		}
 		else if (e.getSource() == imeIgralcev) { 
 			// TODO 
@@ -114,12 +134,18 @@ public class Okno extends JFrame implements ActionListener{
 			// TODO 
 		}
 		else if (e.getSource() == trajanje) { 
-			// TODO
+			int N = Integer.parseInt(JOptionPane.showInputDialog("Po koliko èasa naj raèunalnik odigra potezo?"));
+			Vodja.cas = N;
 		}
 		else if (e.getSource() == barva) { 
-//			Color novaBarvaEna = JColorChooser.showDialog(this, "Izberi barvo prvega igralca", Vodja.barvaIgralca.get(R));
-//			Vodja.barvaIgralca.replace(R, novaBarvaEna);
-			
+			System.out.println(Vodja.barvaIgralca);
+			Color novaBarvaEna = JColorChooser.showDialog(this, "Izberi barvo prvega igralca",
+					Vodja.barvaIgralca.get(logika.Igralec.R));
+			Color novaBarvaDva = JColorChooser.showDialog(this, "Izberite barvo drugega igralca",
+					Vodja.barvaIgralca.get(logika.Igralec.M));
+			Vodja.barvaIgralca.replace(logika.Igralec.R, novaBarvaEna);
+			Vodja.barvaIgralca.replace(logika.Igralec.M, novaBarvaDva);
+			System.out.println(Vodja.barvaIgralca);
 		}
 		
 	}

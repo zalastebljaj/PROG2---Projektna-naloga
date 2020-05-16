@@ -19,7 +19,7 @@ public class Vodja {
 	//Igralcu priredimo njegovo barvo
 	public static Map<Igralec, Color> barvaIgralca;
 	//Igralcu priredimo njegovo ime
-	public static Map<Igralec, String> imeIgralca;
+	public static HashMap<Igralec, String> imeIgralca;
 	
 	public static Okno okno;
 	
@@ -32,14 +32,19 @@ public class Vodja {
 	
 	
 	//Zacne igro na standardnem 11*11 polju
-	public static void igramoNovoIgro() {
-		igra = new Igra();
-		igramo();
+	public static void igramoNovoIgro(VrstaIgralca igralec1, VrstaIgralca igralec2) {
+		igramoNovoIgro(11, igralec1, igralec2);
 	}
 	
 	//Zacne novo igro  na N*N igralnem polju
-	public static void igramoNovoIgro(int N) {
+	public static void igramoNovoIgro(int N, VrstaIgralca igralec1, VrstaIgralca igralec2) {
 		igra = new Igra(N);
+		barvaIgralca = new HashMap<Igralec, Color>();
+		barvaIgralca.put(logika.Igralec.R, Color.RED);
+		barvaIgralca.put(logika.Igralec.M, Color.BLUE);
+		vrstaIgralca = new HashMap<Igralec, VrstaIgralca>();
+		vrstaIgralca.put(logika.Igralec.R, igralec1);
+		vrstaIgralca.put(logika.Igralec.M, igralec2);
 		igramo();
 	}
 	
