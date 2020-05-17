@@ -30,24 +30,36 @@ public class Vodja {
 	//Koliko casa pretece preden racunalnik odigra svojo potezo (zacetna nastavitev je 2 sekundi)
 	public static int cas = 2;
 	
+	// Zaèetna nastavitev za velikost igralne plošèe
+	public static int N = 11; 
 	
-	//Zacne igro na standardnem 11*11 polju -- Ali sploh potrebujemo?
-	public static void igramoNovoIgro(VrstaIgralca igralec1, VrstaIgralca igralec2) {
-		igramoNovoIgro(11, igralec1, igralec2);
-	}
+	// Zaèetne nastavitve za barvo
+	public static Color barvaEna = Color.red;
+	public static Color barvaDva = Color.blue;
+	
+	// Zaèetne nastavitve imena 
+	public static String imeEna = "Igralec 1"; 
+	public static String imeDva = "Igralec 2"; 
+	
+	// Zaèetne nastavitve vrsta igralca 
+	public static VrstaIgralca igralec1 = vodja.VrstaIgralca.CLOVEK;
+	public static VrstaIgralca igralec2 = vodja.VrstaIgralca.RACUNALNIK;
+	
+	// Zaèetne nastavitve algoritma - Za zaèetek
+	public static String algoritem = "MiniMax"; 
 	
 	//Zacne novo igro  na N*N igralnem polju
-	public static void igramoNovoIgro(int N, VrstaIgralca igralec1, VrstaIgralca igralec2) {
+	public static void igramoNovoIgro() {
 		igra = new Igra(N);
 		barvaIgralca = new HashMap<Igralec, Color>();
-		barvaIgralca.put(logika.Igralec.R, Color.RED);
-		barvaIgralca.put(logika.Igralec.M, Color.BLUE);
+		barvaIgralca.put(logika.Igralec.R, barvaEna);
+		barvaIgralca.put(logika.Igralec.M, barvaDva);
 		vrstaIgralca = new HashMap<Igralec, VrstaIgralca>();
 		vrstaIgralca.put(logika.Igralec.R, igralec1);
 		vrstaIgralca.put(logika.Igralec.M, igralec2);
 		imeIgralca = new HashMap<Igralec, String>();
-		imeIgralca.put(logika.Igralec.R, "Igralec 1");
-		imeIgralca.put(logika.Igralec.M, "Igralec 2");
+		imeIgralca.put(logika.Igralec.R, imeEna);
+		imeIgralca.put(logika.Igralec.M, imeDva);
 		igramo();
 	}
 	
