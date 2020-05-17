@@ -20,6 +20,15 @@ import vodja.Vodja;
 
 public class Okno extends JFrame implements ActionListener{
 	
+	// Privzete nastavitve igre so:
+//		Velikost igralnega polja N = 11 
+//		Igramo Clovek - Racunalnik
+				
+	private int N = 11;
+	
+	private vodja.VrstaIgralca vrstaIgralcaEna = vodja.VrstaIgralca.CLOVEK; 
+	private vodja.VrstaIgralca vrstaIgralcaDva = vodja.VrstaIgralca.RACUNALNIK;
+	
 	public IgralnoPolje polje; 
 	
 	private JMenuBar menuBar;
@@ -107,23 +116,34 @@ public class Okno extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == CC) {
-			Vodja.igramoNovoIgro(vodja.VrstaIgralca.CLOVEK, vodja.VrstaIgralca.CLOVEK);
+			this.vrstaIgralcaEna = vodja.VrstaIgralca.CLOVEK;
+			this.vrstaIgralcaDva = vodja.VrstaIgralca.CLOVEK;
+			Vodja.igramoNovoIgro(this.N, this.vrstaIgralcaEna, this.vrstaIgralcaDva);
 		}
 		else if (e.getSource() == CR) {
-			Vodja.igramoNovoIgro(vodja.VrstaIgralca.CLOVEK, vodja.VrstaIgralca.RACUNALNIK);
+			this.vrstaIgralcaEna = vodja.VrstaIgralca.CLOVEK;
+			this.vrstaIgralcaDva = vodja.VrstaIgralca.RACUNALNIK;
+			Vodja.igramoNovoIgro(this.N, this.vrstaIgralcaEna, this.vrstaIgralcaDva);
 		}
 		else if (e.getSource() == RC) {
-			Vodja.igramoNovoIgro(vodja.VrstaIgralca.RACUNALNIK, vodja.VrstaIgralca.CLOVEK);
+			this.vrstaIgralcaEna = vodja.VrstaIgralca.RACUNALNIK;
+			this.vrstaIgralcaDva = vodja.VrstaIgralca.CLOVEK;
+			Vodja.igramoNovoIgro(this.N, this.vrstaIgralcaEna, this.vrstaIgralcaDva);
 		}
 		else if (e.getSource() == RR) {
-			Vodja.igramoNovoIgro(vodja.VrstaIgralca.RACUNALNIK, vodja.VrstaIgralca.RACUNALNIK);
+			this.vrstaIgralcaEna = vodja.VrstaIgralca.RACUNALNIK;
+			this.vrstaIgralcaDva = vodja.VrstaIgralca.RACUNALNIK;
+			Vodja.igramoNovoIgro(this.N, this.vrstaIgralcaEna, this.vrstaIgralcaDva);
 		}
 		else if (e.getSource() == velikost) {
-			int N = Integer.parseInt(JOptionPane.showInputDialog("Velikost igralnega polja: "));
-			Vodja.igramoNovoIgro(N, vodja.VrstaIgralca.CLOVEK, vodja.VrstaIgralca.RACUNALNIK);
+			this.N = Integer.parseInt(JOptionPane.showInputDialog("Velikost igralnega polja: "));
+			Vodja.igramoNovoIgro(this.N, this.vrstaIgralcaEna, this.vrstaIgralcaDva);
 		}
 		else if (e.getSource() == imeIgralcev) { 
-			// TODO 
+			String novoImeEna = JOptionPane.showInputDialog(this, "Kako se imenuje prvi igralec?");
+			String novoImeDva = JOptionPane.showInputDialog(this, "Kako se imenuje drugi igralec");
+			Vodja.imeIgralca.replace(logika.Igralec.R, novoImeEna);
+			Vodja.imeIgralca.replace(logika.Igralec.M, novoImeDva);
 		}
 		else if (e.getSource() == vrstaIgralcev) { 
 			// TODO 
@@ -148,11 +168,11 @@ public class Okno extends JFrame implements ActionListener{
 	
 	// Osvezimo GUI
 	public void osveziGUI() {
-		if (Vodja.igra != null) {status.setText("Izberite igro!");}
+		if (Vodja.igra == null) {status.setText("Izberite igro!");}
 		else {
 			switch(Vodja.igra.stanje()) {
 			case V_TEKU:
-				status.setText("Na potezi je");
+				status.setText("Na potezi je " + Vodja.imeIgralca.get(Vodja.igra.naPotezi));
 				break;
 			case ZMAGA_R:
 				status.setText("Zmaga R");

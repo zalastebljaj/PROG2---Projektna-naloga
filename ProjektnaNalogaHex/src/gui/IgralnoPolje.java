@@ -48,19 +48,6 @@ public class IgralnoPolje extends JPanel implements MouseListener{
 		    Graphics2D g2 = (Graphics2D) g;
 		    g2.setStroke(new BasicStroke(2));
 		    double stranica = 1.5 * stranica();
-		    for (int a = 0; a < Vodja.igra.N; a++) {
-		    	for (int b = 0; b < Vodja.igra.N; b++) {
-				    for (int i = 0; i < 6; i++) {
-				    	if (((a == 0) && (i == 2 || i == 3)) || ((a == Vodja.igra.N - 1 && (i == 5 || i == 0)))) {g2.setColor(Vodja.barvaIgralca.get(logika.Igralec.R));}
-				    	else if (((b == 0) && (i == 4 || i == 5)) || ((b == Vodja.igra.N - 1 && (i == 2 || i == 1)))){g2.setColor(Vodja.barvaIgralca.get(logika.Igralec.M));}
-				    	else {g2.setColor(Color.BLACK);}
-				    	g.drawLine((int) (zamik + b * stranica * Math.sqrt(3.) + Math.sqrt(3) * a * stranica / 2 + stranica * Math.sin(2 * Math.PI * i / 6)),
-				    	(int) (zamik + a * stranica * 1.5 + stranica * Math.cos(2 * Math.PI * i / 6)),
-				    	(int) (zamik + b * stranica * Math.sqrt(3.) + Math.sqrt(3) * a * stranica / 2 + stranica * Math.sin(2 * Math.PI * (i + 1) / 6)),
-				    	(int) (zamik + a * stranica * 1.5 + stranica * Math.cos(2 * Math.PI * (i + 1) / 6)));
-				    }	
-		    	}
-		    }
 		    Color barva = Vodja.barvaIgralca.get(logika.Igralec.R);
 		    for (Koordinati koordinata : Vodja.igra.odigranePoteze) {
 		    	int a = koordinata.getX(); int b = koordinata.getY();
@@ -74,6 +61,19 @@ public class IgralnoPolje extends JPanel implements MouseListener{
 		        	barva = Vodja.barvaIgralca.get(logika.Igralec.M);
 		        }
 		        else {barva = Vodja.barvaIgralca.get(logika.Igralec.R);}
+		    }
+		    for (int a = 0; a < Vodja.igra.N; a++) {
+		    	for (int b = 0; b < Vodja.igra.N; b++) {
+				    for (int i = 0; i < 6; i++) {
+				    	if (((a == 0) && (i == 2 || i == 3)) || ((a == Vodja.igra.N - 1 && (i == 5 || i == 0)))) {g2.setColor(Vodja.barvaIgralca.get(logika.Igralec.R));}
+				    	else if (((b == 0) && (i == 4 || i == 5)) || ((b == Vodja.igra.N - 1 && (i == 2 || i == 1)))){g2.setColor(Vodja.barvaIgralca.get(logika.Igralec.M));}
+				    	else {g2.setColor(Color.BLACK);}
+				    	g.drawLine((int) (zamik + b * stranica * Math.sqrt(3.) + Math.sqrt(3) * a * stranica / 2 + stranica * Math.sin(2 * Math.PI * i / 6)),
+				    	(int) (zamik + a * stranica * 1.5 + stranica * Math.cos(2 * Math.PI * i / 6)),
+				    	(int) (zamik + b * stranica * Math.sqrt(3.) + Math.sqrt(3) * a * stranica / 2 + stranica * Math.sin(2 * Math.PI * (i + 1) / 6)),
+				    	(int) (zamik + a * stranica * 1.5 + stranica * Math.cos(2 * Math.PI * (i + 1) / 6)));
+				    }	
+		    	}
 		    }
 	    }
 		else {

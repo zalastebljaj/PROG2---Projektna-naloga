@@ -31,7 +31,7 @@ public class Vodja {
 	public static int cas = 2;
 	
 	
-	//Zacne igro na standardnem 11*11 polju
+	//Zacne igro na standardnem 11*11 polju -- Ali sploh potrebujemo?
 	public static void igramoNovoIgro(VrstaIgralca igralec1, VrstaIgralca igralec2) {
 		igramoNovoIgro(11, igralec1, igralec2);
 	}
@@ -45,6 +45,9 @@ public class Vodja {
 		vrstaIgralca = new HashMap<Igralec, VrstaIgralca>();
 		vrstaIgralca.put(logika.Igralec.R, igralec1);
 		vrstaIgralca.put(logika.Igralec.M, igralec2);
+		imeIgralca = new HashMap<Igralec, String>();
+		imeIgralca.put(logika.Igralec.R, "Igralec 1");
+		imeIgralca.put(logika.Igralec.M, "Igralec 2");
 		igramo();
 	}
 	
