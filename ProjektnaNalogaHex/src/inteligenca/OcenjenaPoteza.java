@@ -11,5 +11,11 @@ public class OcenjenaPoteza {
 		this.poteza = poteza;
 		this.ocena = ocena;
 	}
+	
+	public int compareTo (OcenjenaPoteza op) {
+		if (this.ocena < op.ocena) return -1;
+		else if (this.ocena > op.ocena) return 1;
+		else return 0;
+	}
 
 }
