@@ -148,7 +148,7 @@ public class Okno extends JFrame implements ActionListener{
 	
 	// Osvezimo GUI
 	public void osveziGUI() {
-		if (Vodja.igra != null) {status.setText("Izberite igro!");}
+		if (Vodja.igra == null) {status.setText("Igra ni v teku!");}
 		else {
 			switch(Vodja.igra.stanje()) {
 			case V_TEKU:

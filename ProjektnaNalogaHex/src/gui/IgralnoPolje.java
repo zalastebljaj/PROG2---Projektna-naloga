@@ -63,7 +63,7 @@ public class IgralnoPolje extends JPanel implements MouseListener{
 		    }
 		    Color barva = Vodja.barvaIgralca.get(logika.Igralec.R);
 		    for (Koordinati koordinata : Vodja.igra.odigranePoteze) {
-		    	int a = koordinata.getX(); int b = koordinata.getY();
+		    	int b = koordinata.getX(); int a = koordinata.getY();
 		    	g2.setColor(barva);
 		    	Polygon p = new Polygon();
 		        for (int i = 0; i < 6; i++)
@@ -98,7 +98,7 @@ public class IgralnoPolje extends JPanel implements MouseListener{
 					int y0 = (int) (zamik + a * stranica * 1.5);
 					int r = (int) (stranica * Math.sqrt(3) / 2);
 					if (vsebuje(x0, y0, r, x, y)) {
-						Vodja.igrajClovekovoPotezo(new Koordinati(a, b));
+						Vodja.igrajClovekovoPotezo(new Koordinati(b, a));
 						break;
 					}
 				}

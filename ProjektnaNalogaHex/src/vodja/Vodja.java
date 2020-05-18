@@ -63,6 +63,7 @@ public class Vodja {
 				break;
 			case RACUNALNIK :
 				racunalnikovaPoteza();
+				break;
 			}
 		}
 	}
