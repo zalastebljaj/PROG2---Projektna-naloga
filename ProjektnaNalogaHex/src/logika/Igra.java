@@ -71,7 +71,7 @@ public class Igra {
 		return sosedi;
 	}
 
-	/**Pomozna funkcija, ki sproti preverja ali je kaksno od sosednjih polj danega polja(podanega s koordinatami
+	/**Pomozna funkcija, ki sproti preverja ali je kaksno od sosednjih polj danega polja(podanega s koordinatami)
 	 * od istega igralca in tako gradi seznam vseh polj, ki so iste barve in so povezana z zacetnim poljem
 	 * (seznam koordinat vseh takih polj)
 	 */
@@ -88,11 +88,13 @@ public class Igra {
 				else continue;
 			}
 		}
+		System.out.println("koordinate");
+		System.out.println(koordinate);
 		return koordinate;
 	}
 	
-	/**S pomocjo pomozne vrne seznam vseh enako pobarvanih povezanih polj, ki se drzijo enega od robov igralne
-	 * plosce, ce v njej obstaja tako pobarvano polje, drugace vrne null
+	/**S pomocjo pomozne metode pot vrne seznam koordinat vseh enako pobarvanih povezanih polj, ki se drzijo enega od 
+	 * robov igralne plosce (polja s koordinatami (i, 0) za rdece in (0, j) za modre).
 	 */
 	public LinkedList<Koordinati> zmagovalnaPot() {
 		koordinate.clear();
@@ -100,7 +102,7 @@ public class Igra {
 			for (int i = 0; i < N; ++i) {
 				if (plosca[i][0] == Polje.R) {
 					Koordinati k = new Koordinati(i, 0);
-					return pot(k, Polje.R);
+					pot(k, Polje.R);
 				}
 			}
 		}
@@ -108,17 +110,19 @@ public class Igra {
 			for (int j = 0; j < N; ++j) {
 				if (plosca[0][j] == Polje.M) {
 					Koordinati k = new Koordinati(0, j);
-					return pot(k, Polje.M);
+					pot(k, Polje.M);
 				}
 			}
 		}
-		return null;
+		return koordinate;
 	}
 	
-	//Vrne igralca, ki je zmagal
+	/**Preveri ali se polja iz metode zmagovalnaPot drzijo nasprotnega roba in vrne igralca, ki je zmagal, 
+	* èe obstaja, drugace vrne null.
+	*/
 	public Polje zmagovalec() {
 		LinkedList<Koordinati> p = zmagovalnaPot();
-		if (zmagovalnaPot() != null) {
+		if (zmagovalnaPot().size() != 0) {
 			if (naPotezi == Igralec.M) {
 				for (int i = 0; i < N; ++i) {
 					if (plosca[i][N - 1] == Polje.R) {
@@ -136,6 +140,7 @@ public class Igra {
 				}
 			}
 		}
+		System.out.println("NULLzmagovalec");
 		return null;
 	}
 	
