@@ -88,8 +88,6 @@ public class Igra {
 				else continue;
 			}
 		}
-		System.out.println("koordinate");
-		System.out.println(koordinate);
 		return koordinate;
 	}
 	
@@ -140,7 +138,6 @@ public class Igra {
 				}
 			}
 		}
-		System.out.println("NULLzmagovalec");
 		return null;
 	}
 	
