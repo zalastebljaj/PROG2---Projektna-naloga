@@ -46,8 +46,10 @@ public class IgralnoPolje extends JPanel implements MouseListener{
 		if (Vodja.igra != null) {
 			super.paintComponent(g);
 		    Graphics2D g2 = (Graphics2D) g;
-		    g2.setStroke(new BasicStroke(2));
+		    g2.setStroke(new BasicStroke(3));
 		    double stranica = 1.5 * stranica();
+		    
+		    // Narišemo mrežo 
 		    for (int a = 0; a < Vodja.igra.N; a++) {
 		    	for (int b = 0; b < Vodja.igra.N; b++) {
 				    for (int i = 0; i < 6; i++) {
@@ -61,6 +63,8 @@ public class IgralnoPolje extends JPanel implements MouseListener{
 				    }	
 		    	}
 		    }
+		    
+		    // Pobarvamo že odigrane poteze
 		    Color barva = Vodja.barvaIgralca.get(logika.Igralec.R);
 		    for (Koordinati koordinata : Vodja.igra.odigranePoteze) {
 		    	int b = koordinata.getX(); int a = koordinata.getY();
@@ -70,10 +74,42 @@ public class IgralnoPolje extends JPanel implements MouseListener{
 		            p.addPoint((int) (zamik + b * stranica * Math.sqrt(3.) + Math.sqrt(3) * a * stranica / 2 + stranica * Math.sin(2 * Math.PI * i / 6)),
 		              (int) (zamik + a * stranica * 1.5 + stranica * Math.cos(2 * Math.PI * i / 6)));        
 		        g2.fillPolygon(p);
+		        g2.setColor(Color.BLACK);
+		        g2.drawPolygon(p);
+		        g2.setColor(barva);
 		        if (barva == Vodja.barvaIgralca.get(logika.Igralec.R)) {
 		        	barva = Vodja.barvaIgralca.get(logika.Igralec.M);
 		        }
 		        else {barva = Vodja.barvaIgralca.get(logika.Igralec.R);}
+		    }
+		    
+		    // Zadnja poteza oznaèena rumeno
+		    if (Vodja.igra.odigranePoteze.size() > 0) {
+			    Koordinati koordinata = Vodja.igra.odigranePoteze.get(Vodja.igra.odigranePoteze.size() - 1);
+			    int b = koordinata.getX(); 
+			    int a = koordinata.getY();
+			    g.setColor(Color.YELLOW);
+			    for (int i = 0; i < 6; i++) {
+				    g.drawLine((int) (zamik + b * stranica * Math.sqrt(3.) + Math.sqrt(3) * a * stranica / 2 + stranica * Math.sin(2 * Math.PI * i / 6)),
+					    	(int) (zamik + a * stranica * 1.5 + stranica * Math.cos(2 * Math.PI * i / 6)),
+					    	(int) (zamik + b * stranica * Math.sqrt(3.) + Math.sqrt(3) * a * stranica / 2 + stranica * Math.sin(2 * Math.PI * (i + 1) / 6)),
+					    	(int) (zamik + a * stranica * 1.5 + stranica * Math.cos(2 * Math.PI * (i + 1) / 6)));
+			    }	
+		    }
+		    
+		    // Zmagovalna pot je oznaèena rumeno
+		    if (Vodja.igra.zmagovalec() != null) {
+		    	for (Koordinati koordinata : Vodja.igra.zmagovalnaPot()) {
+		    		int b = koordinata.getX(); 
+				    int a = koordinata.getY();
+				    g.setColor(Color.YELLOW);
+				    for (int i = 0; i < 6; i++) {
+					    g.drawLine((int) (zamik + b * stranica * Math.sqrt(3.) + Math.sqrt(3) * a * stranica / 2 + stranica * Math.sin(2 * Math.PI * i / 6)),
+						    	(int) (zamik + a * stranica * 1.5 + stranica * Math.cos(2 * Math.PI * i / 6)),
+						    	(int) (zamik + b * stranica * Math.sqrt(3.) + Math.sqrt(3) * a * stranica / 2 + stranica * Math.sin(2 * Math.PI * (i + 1) / 6)),
+						    	(int) (zamik + a * stranica * 1.5 + stranica * Math.cos(2 * Math.PI * (i + 1) / 6)));
+				    }	
+		    	}
 		    }
 	    }
 		else {
