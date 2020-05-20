@@ -42,6 +42,19 @@ public class Igra {
 		odigranePoteze = new LinkedList<Koordinati>();
 	}
 	
+	//Konstruktor, ki naredi kopjo igre, ki jo dobi kot parameter
+	public Igra(Igra igra) {
+		this.N = igra.N;
+		this.plosca = new Polje[N][N];
+		for (int i = 0; i < N; ++i) {
+			for (int j = 0; j < N; j++) {
+				this.plosca[i][j] = igra.plosca[i][j];
+			}
+		}
+		this.naPotezi = igra.naPotezi;
+		this.odigranePoteze = igra.odigranePoteze;
+	}
+	
 	//Vrne seznam vseh moznih potez(polja, ki so se prazna)
 	public LinkedList<Koordinati> moznePoteze() {
 		LinkedList<Koordinati> mp = new LinkedList<Koordinati>();
