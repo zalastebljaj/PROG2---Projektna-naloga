@@ -55,6 +55,16 @@ public class Igra {
 		this.odigranePoteze = igra.odigranePoteze;
 	}
 	
+	//Metoda, ki vrne igralca na potezi
+	public Igralec naPotezi() {
+		return naPotezi;
+	}
+	
+	//Metoda, ki vrne igralno plosco
+	public Polje[][] getPlosca(){
+		return plosca;
+	}
+	
 	//Vrne seznam vseh moznih potez(polja, ki so se prazna)
 	public LinkedList<Koordinati> moznePoteze() {
 		LinkedList<Koordinati> mp = new LinkedList<Koordinati>();
