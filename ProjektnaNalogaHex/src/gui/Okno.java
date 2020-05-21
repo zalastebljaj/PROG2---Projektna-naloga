@@ -41,7 +41,7 @@ public class Okno extends JFrame implements ActionListener{
 		RC = new JMenuItem("Raèunalnik - Èlovek");
 		RC.addActionListener(this);
 		CR = new JMenuItem("Èlovek - Raèunalnik"); 
-		RC.addActionListener(this);
+		CR.addActionListener(this);
 		RR = new JMenuItem("Raèunalnik - Raèunalnik"); 
 		RR.addActionListener(this);
 		novaIgra.add(CC);

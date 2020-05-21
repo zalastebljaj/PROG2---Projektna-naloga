@@ -33,13 +33,15 @@ public class IgralnoPolje extends JPanel implements MouseListener{
 		return new Dimension(500, 500);
 	}
 	
-	private final static double LINE_WIDTH = 0.1; 
+	private final static double LINE_WIDTH = 0.2; 
 	
+	
+	// Da je igralno polje v celoti vidno - za silo
 	private double stranica() {
-		return Math.min(getWidth(), getHeight()) / (3 * 11);
+		return Math.min(getWidth(), getHeight()) / (4 * Vodja.N);
 	}
 	
-	public int zamik = 100;
+	public int zamik = 50 * Vodja.N / 11;
 	
 	@Override 
 	protected void paintComponent(Graphics g) {
