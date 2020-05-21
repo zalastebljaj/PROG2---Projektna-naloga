@@ -100,8 +100,8 @@ public class IgralnoPolje extends JPanel implements MouseListener{
 		    }
 		    
 		    // Zmagovalna pot je oznaèena rumeno
-		    if (Vodja.igra.zmagovalec() != null) {
-		    	for (Koordinati koordinata : Vodja.igra.zmagovalnaPot()) {
+		    if (Vodja.igra.zmagovalec != null) {
+		    	for (Koordinati koordinata : Vodja.igra.zmagovalnaPot) {
 		    		int b = koordinata.getX(); 
 				    int a = koordinata.getY();
 				    g.setColor(Color.YELLOW);

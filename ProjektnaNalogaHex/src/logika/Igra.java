@@ -16,6 +16,10 @@ public class Igra {
 	//Seznam koordinat ze odigranih potez
 	public LinkedList<Koordinati> odigranePoteze;
 	
+	public Igralec zmagovalec;
+	
+	public LinkedList<Koordinati> zmagovalnaPot;
+	
 	//Osnovni konstruktor, ki naredi igro s poljem 11*11
 	public Igra() {
 		N = 11;
@@ -27,6 +31,8 @@ public class Igra {
 		}
 		naPotezi = Igralec.R;
 		odigranePoteze = new LinkedList<Koordinati>();
+		zmagovalec = null;
+		zmagovalnaPot = null;
 	}
 	
 	//Konstruktor, ki vzame N kot parameter in naredi igro s poljem velikosti N*N
@@ -40,6 +46,8 @@ public class Igra {
 		}
 		naPotezi = Igralec.R;
 		odigranePoteze = new LinkedList<Koordinati>();
+		zmagovalec = null;
+		zmagovalnaPot = null;
 	}
 	
 	//Konstruktor, ki naredi kopjo igre, ki jo dobi kot parameter
@@ -53,6 +61,8 @@ public class Igra {
 		}
 		this.naPotezi = igra.naPotezi;
 		this.odigranePoteze = igra.odigranePoteze;
+		this.zmagovalec = igra.zmagovalec;
+		this.zmagovalnaPot = igra.zmagovalnaPot;
 	}
 	
 	//Metoda, ki vrne igralca na potezi
@@ -121,21 +131,37 @@ public class Igra {
 		koordinate.clear();
 		if (naPotezi == Igralec.M) {
 			for (int i = 0; i < N; ++i) {
+				koordinate.clear();
 				if (plosca[i][0] == Polje.R) {
 					Koordinati k = new Koordinati(i, 0);
-					pot(k, Polje.R);
+					for (int m = 0; m < N; ++m) {
+						Koordinati l = new Koordinati(m, N - 1);
+						if (pot(k, Polje.R).contains(l)) {
+							koordinate.clear();
+							zmagovalnaPot = pot(k, Polje.R);
+							return pot(k, Polje.R);
+						}
+					}
 				}
 			}
 		}
 		else {
 			for (int j = 0; j < N; ++j) {
+				koordinate.clear();
 				if (plosca[0][j] == Polje.M) {
 					Koordinati k = new Koordinati(0, j);
-					pot(k, Polje.M);
+					for (int n = 0; n < N; ++n) {
+						Koordinati l = new Koordinati(N - 1, n);
+						if (pot(k, Polje.M).contains(l)) {
+							koordinate.clear();
+							zmagovalnaPot = pot(k, Polje.M);
+							return pot(k, Polje.M);
+						}
+					}
 				}
 			}
 		}
-		return koordinate;
+		return null;
 	}
 	
 	/**Preveri ali se polja iz metode zmagovalnaPot drzijo nasprotnega roba in vrne igralca, ki je zmagal, 
@@ -143,22 +169,14 @@ public class Igra {
 	*/
 	public Polje zmagovalec() {
 		LinkedList<Koordinati> p = zmagovalnaPot();
-		if (zmagovalnaPot().size() != 0) {
+		if (p != null) {
 			if (naPotezi == Igralec.M) {
-				for (int i = 0; i < N; ++i) {
-					if (plosca[i][N - 1] == Polje.R) {
-						Koordinati l = new Koordinati(i, N - 1);
-						if (p.contains(l)) return Polje.R;
-					}
-				}
+				zmagovalec = Igralec.R;
+				return Polje.R;
 			}
 			else {
-				for (int i = 0; i < N; ++i) {
-					if (plosca[N - 1][i] == Polje.M) {
-						Koordinati l = new Koordinati(N - 1, i);
-						if (p.contains(l)) return Polje.M;
-					}
-				}
+				zmagovalec = Igralec.M;
+				return Polje.M;
 			}
 		}
 		return null;
