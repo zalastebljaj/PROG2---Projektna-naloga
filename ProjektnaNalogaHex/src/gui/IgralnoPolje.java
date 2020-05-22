@@ -118,7 +118,6 @@ public class IgralnoPolje extends JPanel implements MouseListener{
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g;
 		}
-		this.repaint();
 	}
 
 	public boolean vsebuje(int x0, int y0, int r, int x, int y) {
