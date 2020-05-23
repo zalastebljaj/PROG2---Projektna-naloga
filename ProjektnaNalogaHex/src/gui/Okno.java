@@ -172,10 +172,11 @@ public class Okno extends JFrame implements ActionListener{
 					Vodja.igra.razveljavi();
 				}
 				else if (Vodja.vrstaIgralca.get(Vodja.igra.naPotezi) == vodja.VrstaIgralca.CLOVEK) {
-					Vodja.igra.razveljavi();
+					Vodja.igra.razveljavi_ClovekRacunalnik();
 				}
 				else {System.out.println("Naredi niè");}
 			}
+			osveziGUI();
 		}
 		
 	}

@@ -209,20 +209,19 @@ public class Igra {
 	
 	//Razveljavi zadnjo potezo
 	public void razveljavi() {
-		if (Vodja.vrstaIgralca.get(naPotezi) == vodja.VrstaIgralca.CLOVEK && (Vodja.igralec1 == Vodja.igralec2)) {
-			Koordinati k = odigranePoteze.getLast();
-			plosca[k.getX()][k.getY()] = Polje.PRAZNO;
-			odigranePoteze.removeLast();
-			naPotezi = naPotezi.nasprotnik();
-		}
-		else if (Vodja.vrstaIgralca.get(naPotezi) == vodja.VrstaIgralca.CLOVEK) {
-			Koordinati k = odigranePoteze.getLast(); 
-			plosca[k.getX()][k.getY()] = Polje.PRAZNO; 
-			odigranePoteze.removeLast();
-			Koordinati K = odigranePoteze.getLast(); 
-			plosca[k.getX()][k.getY()] = Polje.PRAZNO; 
-			odigranePoteze.removeLast();
-		}
+		Koordinati k = odigranePoteze.getLast();
+		plosca[k.getX()][k.getY()] = Polje.PRAZNO;
+		odigranePoteze.removeLast();
+		naPotezi = naPotezi.nasprotnik();
+	}
+	
+	public void razveljavi_ClovekRacunalnik() {
+		Koordinati k = odigranePoteze.getLast(); 
+		plosca[k.getX()][k.getY()] = Polje.PRAZNO; 
+		odigranePoteze.removeLast();
+		Koordinati K = odigranePoteze.getLast(); 
+		plosca[k.getX()][k.getY()] = Polje.PRAZNO; 
+		odigranePoteze.removeLast();
 	}
 
 }
