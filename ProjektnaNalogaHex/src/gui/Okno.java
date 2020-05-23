@@ -15,6 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import vodja.Vodja;
+import vodja.VrstaIgralca;
 
 @SuppressWarnings("serial")
 public class Okno extends JFrame implements ActionListener{
@@ -24,7 +25,7 @@ public class Okno extends JFrame implements ActionListener{
 	private JMenuBar menuBar;
 	private JMenu novaIgra, lastnostiIgralcev, lastnostiVmesnika;
 	private JMenuItem CC, CR, RC, RR , velikost, imeIgralcev, algoritemIgranja,
-		trajanje, barva;
+		trajanje, barva, razveljavi;
 	private JLabel status;
 	
 	public Okno() {
@@ -58,8 +59,11 @@ public class Okno extends JFrame implements ActionListener{
 		imeIgralcev.addActionListener(this);
 		algoritemIgranja = new JMenuItem("Algoritem igranja"); 
 		algoritemIgranja.addActionListener(this);
+		razveljavi = new JMenuItem("Razveljavi zadnjo potezo");
+		razveljavi.addActionListener(this);
 		lastnostiIgralcev.add(imeIgralcev);  
-		lastnostiIgralcev.add(algoritemIgranja); 
+		lastnostiIgralcev.add(algoritemIgranja);
+		lastnostiIgralcev.add(razveljavi);
 		menuBar.add(lastnostiIgralcev);
 		
 		lastnostiVmesnika = new JMenu("Lastnosti vmesnika");
@@ -160,6 +164,17 @@ public class Okno extends JFrame implements ActionListener{
 			if (Vodja.igra != null) {
 				Vodja.barvaIgralca.replace(logika.Igralec.R, novaBarvaEna);
 				Vodja.barvaIgralca.replace(logika.Igralec.M, novaBarvaDva);
+			}
+		}
+		else if (e.getSource() == razveljavi) {
+			if (Vodja.igra != null) {
+				if (Vodja.igralec1 == Vodja.igralec2 && Vodja.igralec1 == vodja.VrstaIgralca.CLOVEK) {
+					Vodja.igra.razveljavi();
+				}
+				else if (Vodja.vrstaIgralca.get(Vodja.igra.naPotezi) == vodja.VrstaIgralca.CLOVEK) {
+					Vodja.igra.razveljavi();
+				}
+				else {System.out.println("Naredi niè");}
 			}
 		}
 		
