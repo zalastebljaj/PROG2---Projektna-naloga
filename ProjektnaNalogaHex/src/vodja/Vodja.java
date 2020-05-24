@@ -11,6 +11,7 @@ import java.awt.*;
 import logika.*;
 import splosno.Koordinati;
 import gui.*;
+import inteligenca.Inteligenca;
 
 public class Vodja {
 	
@@ -85,19 +86,30 @@ public class Vodja {
 	
 	
 	private static Random random = new Random();
+	public static Inteligenca racunalnikovaInteligenca = new Inteligenca();
 	
 	public static void racunalnikovaPoteza() {
+		System.out.println("racunalnik");
 		Igra zacetnaIgra = igra;
 		SwingWorker<Koordinati, Void> worker = new SwingWorker<Koordinati, Void> () {
 			@Override
 			protected Koordinati doInBackground() {
-				try {TimeUnit.SECONDS.sleep(cas);} catch (Exception e) {};
-				LinkedList<Koordinati> moznePoteze = igra.moznePoteze();
-				int randomIndex = random.nextInt(moznePoteze.size());
-				return moznePoteze.get(randomIndex);
+				System.out.println("racunalnik1");
+				if (igra.odigranePoteze.size() > 0) {
+					Koordinati poteza = racunalnikovaInteligenca.izberiPotezo(igra);
+					try {TimeUnit.SECONDS.sleep(1);} catch (Exception e) {};
+					return poteza;
+				}
+				else {
+					try {TimeUnit.SECONDS.sleep(cas);} catch (Exception e) {};
+					LinkedList<Koordinati> moznePoteze = igra.moznePoteze();
+					int randomIndex = random.nextInt(moznePoteze.size());
+					return moznePoteze.get(randomIndex);
+				}
 			}
 			@Override
 			protected void done () {
+				System.out.println("racunalnik2");
 				Koordinati poteza = null;
 				try {poteza = get();} catch (Exception e) {};
 				if (igra == zacetnaIgra) {
