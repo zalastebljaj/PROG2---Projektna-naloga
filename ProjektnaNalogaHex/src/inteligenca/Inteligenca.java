@@ -18,7 +18,7 @@ public class Inteligenca extends KdoIgra{
 	//Konstruktor za tekmovanje
 	public Inteligenca() {
 		super("Ime");
-		this.globina = 9;//??
+		this.globina = 6;//??
 	}
 	
 	//Konstruktor za testiranje, ki sprejme parmeter globine
@@ -29,23 +29,27 @@ public class Inteligenca extends KdoIgra{
 	
 	//Izbere najbolso potezo glede na alphabeta algoritem
 	public Koordinati izberiPotezo (Igra igra) {
+		System.out.println("izberipotezo");
 		return alphabetaPoteze(igra, this.globina, PORAZ, ZMAGA, igra.naPotezi()).poteza;
 	}
 	
 	public static OcenjenaPoteza alphabetaPoteze(Igra igra, int globina, int alpha, int beta, Igralec jaz) {
+		System.out.println("alfabeta");
 		int ocena;
 		if (igra.naPotezi() == jaz) {ocena = PORAZ;} else {ocena = ZMAGA;}
 		List<Koordinati> moznePoteze = igra.moznePoteze();
 		Koordinati kandidat = moznePoteze.get(0);
 		for (Koordinati k: moznePoteze) {
 			Igra kopijaIgre = new Igra(igra);
-			kopijaIgre.odigraj (k);
+			kopijaIgre.odigrajVKopiji (k);
 			int ocenak;
 			switch (kopijaIgre.stanje()) {
 			case ZMAGA_R: ocenak = (jaz == Igralec.R ? ZMAGA : PORAZ); break;
 			case ZMAGA_M: ocenak = (jaz == Igralec.M ? ZMAGA : PORAZ); break;
 			default:
-				if (globina == 1) ocenak = OceniPozicijo.oceniPozicijo(kopijaIgre, jaz);
+				if (globina == 1) {
+					ocenak = OceniPozicijo.oceniPozicijo(kopijaIgre, jaz);
+				}
 				else ocenak = alphabetaPoteze (kopijaIgre, globina-1, alpha, beta, jaz).ocena;
 			}
 			if (igra.naPotezi() == jaz) {

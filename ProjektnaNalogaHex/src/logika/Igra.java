@@ -109,7 +109,7 @@ public class Igra {
 	 * od istega igralca in tako gradi seznam vseh polj, ki so iste barve in so povezana z zacetnim poljem
 	 * (seznam koordinat vseh takih polj)
 	 */
-	private LinkedList<Koordinati> pot(Koordinati t, Polje barva) {
+	public LinkedList<Koordinati> pot(Koordinati t, Polje barva) {
 		for (Koordinati k : sosedi(t)) {
 			if (koordinate.contains(t) == false) koordinate.add(t);
 			if (plosca[k.getX()][k.getY()] == barva) {
@@ -207,6 +207,15 @@ public class Igra {
 		else return false;
 	}
 	
+	public boolean odigrajVKopiji(Koordinati k) {
+		if (plosca[k.getX()][k.getY()] == Polje.PRAZNO) {
+			plosca[k.getX()][k.getY()] = naPotezi.getPolje();
+			naPotezi = naPotezi.nasprotnik();
+			return true;
+		}
+		else return false;
+	}
+	
 	//Razveljavi zadnjo potezo
 	public void razveljavi() {
 		Koordinati k = odigranePoteze.getLast();
@@ -219,7 +228,7 @@ public class Igra {
 		Koordinati k = odigranePoteze.getLast(); 
 		plosca[k.getX()][k.getY()] = Polje.PRAZNO; 
 		odigranePoteze.removeLast();
-		Koordinati K = odigranePoteze.getLast(); 
+		//Koordinati K = odigranePoteze.getLast(); 
 		plosca[k.getX()][k.getY()] = Polje.PRAZNO; 
 		odigranePoteze.removeLast();
 	}
