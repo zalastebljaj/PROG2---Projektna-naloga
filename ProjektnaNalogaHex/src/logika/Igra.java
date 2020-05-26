@@ -104,9 +104,77 @@ public class Igra {
 		if (y > 0 && x < N - 1) sosedi.add(new Koordinati(x + 1, y - 1));
 		if (y > 0) sosedi.add(new Koordinati(x, y - 1));
 		if (x > 0) sosedi.add(new Koordinati(x - 1, y));
-		
-		
 		return sosedi;
+	}
+	
+	// Pomozna funkcija, ki vrne le sosede ki gredo protu svoji zmagovalni strani
+	private LinkedList<Koordinati> sosediProtiRobu(Koordinati k, Igralec jaz) {
+		int x = k.getX(); 
+		int y = k.getY(); 
+		LinkedList<Koordinati> sosedi = new LinkedList<Koordinati>(); 
+		if (jaz == Igralec.R) {
+			if (x > 0 && y < N - 1) {
+				sosedi.add(new Koordinati(x - 1, y + 1));
+				sosedi.add(new Koordinati(x, y + 1));
+			}
+			else if (x == 0 && y < N - 1) {
+				sosedi.add(new Koordinati(x, y + 1));
+			}
+		}
+		return sosedi;
+	}
+	
+	// Pomožna funkcija, ki pogleda možnosti za nadaljevanje poti
+	private int moznosti(int najkrajsaPot, Koordinati t, Igra igra, Igralec jaz) {
+		int x = t.getX(); 
+		int y = t.getY(); 
+		if (jaz == Igralec.R) {
+			if (y != N - 1) {
+				if (igra.plosca[x][y] == Polje.PRAZNO) {
+					return najkrajsaPot = 1 + najkrajsaPot(new Koordinati(x, y), igra, jaz);
+				}
+				else if (igra.plosca[x][y] == Polje.R) {
+					return najkrajsaPot = najkrajsaPot(new Koordinati(x, y), igra, jaz);
+				}
+				else {
+					return najkrajsaPot = N + 100;
+				}
+			}
+			else {return najkrajsaPot;}
+		}
+		return 0;
+	}
+	
+	// Funkcija, ki vrne najkrajšo pot iz posamezne zaèetne koordinate
+	public int najkrajsaPot(Koordinati k, Igra igra, Igralec jaz) {
+		int najkrajsaPot = 0; 
+		LinkedList<Koordinati> sosedi = sosediProtiRobu(k, jaz);
+		int moznaPolja = sosedi.size(); 
+		if (moznaPolja == 0) {
+			Koordinati t = sosedi.getFirst();
+			najkrajsaPot += moznosti(najkrajsaPot, t, igra, jaz);
+			}
+		else {
+			Koordinati t1 = sosedi.getFirst();
+			Koordinati t2 = sosedi.getLast(); 
+			najkrajsaPot += Math.min(moznosti(najkrajsaPot, t1, igra, jaz),
+					moznosti(najkrajsaPot, t2, igra, jaz)); 
+			
+		}
+		return najkrajsaPot; 
+	}
+	
+	// Funkcija ki vrne array s najmanjšim številom potez za dokonèanje poti iz posamezen koordinate
+	public int[] najkrajsePoti(Igra igra, Igralec jaz) {
+		int[] najkrajsePoti = new int [N];
+		
+		if (jaz == Igralec.R) {
+			for (int i = 0; i < N; i++) {
+				najkrajsePoti[i] = najkrajsaPot(new Koordinati(i, 0), igra, jaz);
+			}
+		}
+		return najkrajsePoti;
+		
 	}
 
 	/**Pomozna funkcija, ki sproti preverja ali je kaksno od sosednjih polj danega polja(podanega s koordinatami)

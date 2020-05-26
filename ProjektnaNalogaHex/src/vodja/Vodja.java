@@ -66,6 +66,8 @@ public class Vodja {
 	
 	public static void igramo() {
 		okno.osveziGUI();
+		System.out.println("Najkrajše poti");
+		System.out.println(Arrays.toString(igra.najkrajsePoti(igra, Igralec.R)));
 		switch (igra.stanje()) {
 		case ZMAGA_R :
 		case ZMAGA_M :
@@ -93,7 +95,7 @@ public class Vodja {
 		SwingWorker<Koordinati, Void> worker = new SwingWorker<Koordinati, Void> () {
 			@Override
 			protected Koordinati doInBackground() {
-				if (igra.odigranePoteze.size() > 0) {
+				if (igra.odigranePoteze.size() >= 0) {
 					Koordinati poteza = racunalnikovaInteligenca.izberiPotezo(igra);
 					try {TimeUnit.SECONDS.sleep(1);} catch (Exception e) {};
 					return poteza;

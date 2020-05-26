@@ -41,29 +41,7 @@ public class OceniPozicijo {
 				}
 			}
 		}
-		if (jaz == Igralec.R) {return maxDolzinaRdec - 5*maxDolzinaModer;}
-		else return maxDolzinaModer - 5*maxDolzinaRdec;
+		if (jaz == Igralec.R) {return maxDolzinaRdec - 5 * maxDolzinaModer;}
+		else return maxDolzinaModer - 5 * maxDolzinaRdec;
 	}
 }
-	
-//	public static int oceniPozicijo(Igra igra, Igralec jaz) {
-//		int ocena = 0;
-//		for (Koordinati koordinata : igra.odigranePoteze) {
-//			ocena = ocena + oceniKoordinato(koordinata, igra, jaz);
-//		}
-//		return ocena;	
-//	}
-//	
-//	public static int oceniKoordinato (Igra igra, Igralec jaz) {
-//		// TODO
-//	}
-//}
-//
-//
-///*
-// * Strategija grajenja povezave: 
-// * - most -> dve polji lahko povezes na dva nacina -> Nasprotnik ne more blokirati
-// * 		(navpiscna ali vodoravna smer
-// * - Pot gradis z mostovi
-// * - Za vsako polje pogledas 3 polja okrog, in ce lahko zgradis most ga zgradis
-// */
