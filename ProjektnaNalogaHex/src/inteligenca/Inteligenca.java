@@ -1,6 +1,7 @@
 package inteligenca;
 
 import java.util.List;
+import java.util.LinkedList;
 
 import splosno.KdoIgra;
 import splosno.Koordinati;
@@ -18,7 +19,7 @@ public class Inteligenca extends KdoIgra{
 	//Konstruktor za tekmovanje
 	public Inteligenca() {
 		super("Ime");
-		this.globina = 6;//??
+		this.globina = 8;//??
 	}
 	
 	//Konstruktor za testiranje, ki sprejme parmeter globine
@@ -29,17 +30,16 @@ public class Inteligenca extends KdoIgra{
 	
 	//Izbere najbolso potezo glede na alphabeta algoritem
 	public Koordinati izberiPotezo (Igra igra) {
-		System.out.println("izberipotezo");
 		return alphabetaPoteze(igra, this.globina, PORAZ, ZMAGA, igra.naPotezi()).poteza;
 	}
 	
 	public static OcenjenaPoteza alphabetaPoteze(Igra igra, int globina, int alpha, int beta, Igralec jaz) {
-		System.out.println("alfabeta");
 		int ocena;
 		if (igra.naPotezi() == jaz) {ocena = PORAZ;} else {ocena = ZMAGA;}
 		List<Koordinati> moznePoteze = igra.moznePoteze();
 		Koordinati kandidat = moznePoteze.get(0);
-		for (Koordinati k: moznePoteze) {
+		for (OcenjenaPoteza p: najboljse(igra, globina, jaz)) {
+			Koordinati k = p.poteza;
 			Igra kopijaIgre = new Igra(igra);
 			kopijaIgre.odigrajVKopiji (k);
 			int ocenak;
@@ -69,5 +69,40 @@ public class Inteligenca extends KdoIgra{
 				return new OcenjenaPoteza (kandidat, ocena);
 		}
 		return new OcenjenaPoteza (kandidat, ocena);
+	}
+	
+	private static LinkedList<OcenjenaPoteza> najboljse(Igra igra, int globina, Igralec jaz) {
+		LinkedList<OcenjenaPoteza> naj = new LinkedList<OcenjenaPoteza>();
+		LinkedList<Koordinati> moznePoteze = igra.moznePoteze();
+		Igra kopijaIgre = new Igra(igra);
+		for (Koordinati k : moznePoteze) {
+			kopijaIgre.odigrajVKopiji (k);
+			int ocenaKopije = OceniPozicijo.oceniPozicijo(kopijaIgre, jaz);
+			OcenjenaPoteza e = new OcenjenaPoteza(k, ocenaKopije);
+			if (naj.size() < globina) {
+				naj.add(e);
+			}
+			else {
+				replaceMinIf(naj, e);
+			}
+		}
+		return naj;
+	}
+	
+	private static LinkedList<OcenjenaPoteza> replaceMinIf(LinkedList<OcenjenaPoteza> naj, OcenjenaPoteza p) {
+		OcenjenaPoteza min = naj.get(0);
+		int indeks = 0;
+		for (int i = 1; i < naj.size(); ++i) {
+			if (naj.get(i).compareTo(min) == -1) {
+				min = naj.get(i);
+				indeks = i;
+			}
+		}
+		if (p.compareTo(min) == 1) {
+			naj.subList(indeks, indeks + 1).clear();
+			naj.add(indeks, p);
+			return naj;
+		}
+		else return naj;
 	}
 }

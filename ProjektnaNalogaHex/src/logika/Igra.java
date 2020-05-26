@@ -89,7 +89,9 @@ public class Igra {
 		return mp;
 	}
 	
-	LinkedList<Koordinati> koordinate = new LinkedList<Koordinati>();
+	public LinkedList<Koordinati> koordinate = new LinkedList<Koordinati>();
+	public int min = N;
+	public int max = 0;
 	
 	//pomozna funkcija, ki vrne vse sosede glede na dane koordinate
 	private LinkedList<Koordinati> sosedi(Koordinati k){
@@ -97,11 +99,13 @@ public class Igra {
 		int y = k.getY();
 		LinkedList<Koordinati> sosedi = new LinkedList<Koordinati>();
 		if (y < N - 1) sosedi.add(new Koordinati(x, y + 1));
-		if (y > 0) sosedi.add(new Koordinati(x, y - 1));
 		if (x < N - 1) sosedi.add(new Koordinati(x + 1, y));
-		if (x > 0) sosedi.add(new Koordinati(x - 1, y));
 		if (y < N - 1 && x > 0) sosedi.add(new Koordinati(x - 1, y + 1));
 		if (y > 0 && x < N - 1) sosedi.add(new Koordinati(x + 1, y - 1));
+		if (y > 0) sosedi.add(new Koordinati(x, y - 1));
+		if (x > 0) sosedi.add(new Koordinati(x - 1, y));
+		
+		
 		return sosedi;
 	}
 
@@ -109,12 +113,20 @@ public class Igra {
 	 * od istega igralca in tako gradi seznam vseh polj, ki so iste barve in so povezana z zacetnim poljem
 	 * (seznam koordinat vseh takih polj)
 	 */
-	public LinkedList<Koordinati> pot(Koordinati t, Polje barva) {
+	public PotMinMax pot(Koordinati t, Polje barva) {
+		if (barva == Polje.R && t.getY() < min) {min = t.getY();}
+		else if (barva == Polje.M && t.getX() < min) {min = t.getX();}
+		if (barva == Polje.R && t.getY() > max) {max = t.getY();}
+		else if (barva == Polje.M && t.getX() > max) {max = t.getX();}
 		for (Koordinati k : sosedi(t)) {
 			if (koordinate.contains(t) == false) koordinate.add(t);
 			if (plosca[k.getX()][k.getY()] == barva) {
 				if ((k.getY() == N - 1 && barva == Polje.R) || (k.getX() == N - 1 && barva == Polje.M)) {
 					if (koordinate.contains(k) == false) koordinate.add(k);
+					if (barva == Polje.R && k.getY() > max) {max = k.getY();}
+					if (barva == Polje.R && k.getY() < min) {min = k.getY();}
+					if (barva == Polje.M && k.getX() > max) {max = k.getX();}
+					if (barva == Polje.M && k.getX() < min) {min = k.getX();}
 				}
 				else if (koordinate.contains(k) == false) {
 					pot(k, barva);	
@@ -122,25 +134,34 @@ public class Igra {
 				else continue;
 			}
 		}
-		return koordinate;
+		return new PotMinMax(koordinate, min, max);
 	}
 	
 	/**S pomocjo pomozne metode pot vrne seznam koordinat vseh enako pobarvanih povezanih polj, ki se drzijo enega od 
 	 * robov igralne plosce (polja s koordinatami (i, 0) za rdece in (0, j) za modre).
 	 */
 	public LinkedList<Koordinati> zmagovalnaPot() {
+		min = N;
+		max = 0;
 		koordinate.clear();
 		if (naPotezi == Igralec.M) {
 			for (int i = 0; i < N; ++i) {
+				min = N;
+				max = 0;
 				koordinate.clear();
 				if (plosca[i][0] == Polje.R) {
 					Koordinati k = new Koordinati(i, 0);
 					for (int m = 0; m < N; ++m) {
 						Koordinati l = new Koordinati(m, N - 1);
-						if (pot(k, Polje.R).contains(l)) {
+						if (pot(k, Polje.R).pot.contains(l)) {
+							min = N;
+							max = 0;
 							koordinate.clear();
-							zmagovalnaPot = pot(k, Polje.R);
-							return pot(k, Polje.R);
+							zmagovalnaPot = pot(k, Polje.R).pot;
+							min = N;
+							max = 0;
+							koordinate.clear();
+							return pot(k, Polje.R).pot;
 						}
 					}
 				}
@@ -148,15 +169,22 @@ public class Igra {
 		}
 		else {
 			for (int j = 0; j < N; ++j) {
+				min = N;
+				max = 0;
 				koordinate.clear();
 				if (plosca[0][j] == Polje.M) {
 					Koordinati k = new Koordinati(0, j);
 					for (int n = 0; n < N; ++n) {
 						Koordinati l = new Koordinati(N - 1, n);
-						if (pot(k, Polje.M).contains(l)) {
+						if (pot(k, Polje.M).pot.contains(l)) {
+							min = N;
+							max = 0;
 							koordinate.clear();
-							zmagovalnaPot = pot(k, Polje.M);
-							return pot(k, Polje.M);
+							zmagovalnaPot = pot(k, Polje.M).pot;
+							min = N;
+							max = 0;
+							koordinate.clear();
+							return pot(k, Polje.M).pot;
 						}
 					}
 				}
