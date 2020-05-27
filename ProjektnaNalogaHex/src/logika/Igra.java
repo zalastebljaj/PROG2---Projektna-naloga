@@ -109,47 +109,24 @@ public class Igra {
 		if (x > 0) sosedi.add(new Koordinati(x - 1, y));
 		return sosedi;
 	}
-	
-	// Pomozna funkcija, ki vrne le sosede ki gredo protu svoji zmagovalni strani
-	private LinkedList<Koordinati> sosediProtiRobu(Koordinati k, Igralec jaz) {
-		int x = k.getX(); 
-		int y = k.getY(); 
-		LinkedList<Koordinati> sosedi = new LinkedList<Koordinati>(); 
-		if (jaz == Igralec.R) {
-			if (x > 0 && y < N - 1) {
-				sosedi.add(new Koordinati(x - 1, y + 1));
-				sosedi.add(new Koordinati(x, y + 1));
-			}
-			else if (x == 0 && y < N - 1) {
-				sosedi.add(new Koordinati(x, y + 1));
-			}
-		}
-		else {
-			if (y > 0 && x < N - 1) {
-				sosedi.add(new Koordinati(x + 1, y - 1));
-				sosedi.add(new Koordinati(x + 1, y));
-			}
-			else if (y == 0 && x < N - 1) {
-				sosedi.add(new Koordinati(x + 1, y));
-			}
-		}
-		return sosedi;
-	}
+
 	
 	// Pomožna funkcija, ki pogleda možnosti za nadaljevanje poti
-	private int moznosti(int najkrajsaPot, Koordinati t, Igra igra, Igralec jaz) {
+	private int moznosti(int najkrajsaPot, Koordinati t, Igra igra, Igralec jaz, LinkedList<Koordinati> obiskani) {
 		int x = t.getX(); 
 		int y = t.getY(); 
+		obiskani.add(t);
 		if (jaz == Igralec.R) {
+			if (y == 0 && igra.plosca[x][0] == Polje.M) {return Integer.MAX_VALUE;} 
 			if (y != N - 1) {
 				if (igra.plosca[x][y] == Polje.PRAZNO) {
-					return najkrajsaPot = 1 + najkrajsaPot(new Koordinati(x, y), igra, jaz);
+					return najkrajsaPot = 1 + najkrajsaPot(new Koordinati(x, y), igra, jaz, obiskani);
 				}
 				else if (igra.plosca[x][y] == Polje.R) {
-					return najkrajsaPot = najkrajsaPot(new Koordinati(x, y), igra, jaz);
+					return najkrajsaPot = najkrajsaPot(new Koordinati(x, y), igra, jaz, obiskani);
 				}
 				else {
-					return 100000;
+					return Integer.MAX_VALUE;
 				}
 			}
 			if (y == N - 1) { 
@@ -159,19 +136,20 @@ public class Igra {
 				else if (igra.plosca[x][y] == Polje.R) {
 					return najkrajsaPot;
 				}
-				else {return 100000;}
+				else {return Integer.MAX_VALUE;}
 			}
 		}
 		else {
+			if (x == 0 && igra.plosca[0][y] == Polje.R) {return Integer.MAX_VALUE;} 
 			if (x != N - 1) {
 				if (igra.plosca[x][y] == Polje.PRAZNO) {
-					return najkrajsaPot = 1 + najkrajsaPot(new Koordinati(x, y), igra, jaz);
+					return najkrajsaPot = 1 + najkrajsaPot(new Koordinati(x, y), igra, jaz, obiskani);
 				}
 				else if (igra.plosca[x][y] == Polje.M) {
-					return najkrajsaPot = najkrajsaPot(new Koordinati(x, y), igra, jaz);
+					return najkrajsaPot = najkrajsaPot(new Koordinati(x, y), igra, jaz, obiskani);
 				}
 				else {
-					return 100000;
+					return Integer.MAX_VALUE;
 				}
 			}
 			if (x == N - 1) { 
@@ -181,28 +159,43 @@ public class Igra {
 				else if (igra.plosca[x][y] == Polje.M) {
 					return najkrajsaPot;
 				}
-				else {return 100000;}
+				else {return Integer.MAX_VALUE;}
 			}
 		}
 		return 0;
 	}
 	
-	// Funkcija, ki vrne najkrajšo pot iz posamezne zaèetne koordinate
-	public int najkrajsaPot(Koordinati k, Igra igra, Igralec jaz) {
-		int najkrajsaPot = 0; 
-		LinkedList<Koordinati> sosedi = sosediProtiRobu(k, jaz);
-		int moznaPolja = sosedi.size(); 
-		if (moznaPolja == 0) {
-			Koordinati t = sosedi.getFirst();
-			najkrajsaPot += moznosti(najkrajsaPot, t, igra, jaz);
-			}
-		else {
-			Koordinati t1 = sosedi.getFirst();
-			Koordinati t2 = sosedi.getLast(); 
-			najkrajsaPot += Math.min(moznosti(najkrajsaPot, t1, igra, jaz),
-					moznosti(najkrajsaPot, t2, igra, jaz)); 
+	public int najmanjsiOd(LinkedList<Koordinati> sosedi, Igra igra, Igralec jaz, LinkedList<Koordinati> obiskani) { 
+		int najmanjsiOd = Integer.MAX_VALUE; 
+		for (Koordinati sosed : sosedi) { 
+			int vrednost = moznosti(0, sosed, igra, jaz, obiskani);
+			if (vrednost < najmanjsiOd && vrednost >= 0) {najmanjsiOd = vrednost;}
 			
 		}
+		return najmanjsiOd;
+	}
+	
+	// Funkcija, ki vrne najkrajšo pot iz posamezne zaèetne koordinate
+	public int najkrajsaPot(Koordinati k, Igra igra, Igralec jaz, LinkedList<Koordinati> obiskani) {
+		int najkrajsaPot = 0; 
+		LinkedList<Koordinati> sosedi = sosedi(k);
+		for (Koordinati obiskan : obiskani) {
+			if (sosedi.contains(obiskan)) {sosedi.remove(obiskan);}
+		}
+//		System.out.println(sosedi);
+		najkrajsaPot += najmanjsiOd(sosedi, igra, jaz, obiskani);
+//		int moznaPolja = sosedi.size(); 
+//		if (moznaPolja == 0) {
+//			Koordinati t = sosedi.getFirst();
+//			najkrajsaPot += moznosti(najkrajsaPot, t, igra, jaz);
+//			}
+//		else {
+//			Koordinati t1 = sosedi.getFirst();
+//			Koordinati t2 = sosedi.getLast(); 
+//			najkrajsaPot += Math.min(moznosti(najkrajsaPot, t1, igra, jaz),
+//					moznosti(najkrajsaPot, t2, igra, jaz)); 
+//			
+//		}
 		return najkrajsaPot; 
 	}
 	
@@ -212,16 +205,29 @@ public class Igra {
 		
 		if (jaz == Igralec.R) {
 			for (int i = 0; i < N; i++) {
-				najkrajsePoti[i] = najkrajsaPot(new Koordinati(i, 0), igra, jaz);
+				LinkedList<Koordinati> obiskani = new LinkedList<Koordinati>();
+				if (igra.plosca[i][0] == Polje.PRAZNO) {
+					najkrajsePoti[i] = 1 + najkrajsaPot(new Koordinati(i, 0), igra, jaz, obiskani);
+				}
+				else if (igra.plosca[i][0] == Polje.R) {
+					najkrajsePoti[i] += najkrajsaPot(new Koordinati(i, 0), igra, jaz, obiskani);
+				}
+				else {najkrajsePoti[i] = Integer.MAX_VALUE;}
 			}
 		}
 		else if (jaz == Igralec.M) {
 			for (int j = 0; j < N; j++) {
-				najkrajsePoti[j] = najkrajsaPot(new Koordinati(0, j), igra, jaz); 
+				LinkedList<Koordinati> obiskani = new LinkedList<Koordinati>();
+				if (igra.plosca[0][j] == Polje.PRAZNO) {
+					najkrajsePoti[j] = 1 + najkrajsaPot(new Koordinati(0, j), igra, jaz, obiskani); 
+				}
+				else if (igra.plosca[0][j] == Polje.M) {
+					najkrajsePoti[j] += najkrajsaPot(new Koordinati(j, 0), igra, jaz, obiskani);
+				}
+				else {najkrajsePoti[j] = Integer.MAX_VALUE;}
 			}
 		}
 		return najkrajsePoti;
-		
 	}
 
 	/**Pomozna funkcija, ki sproti preverja ali je kaksno od sosednjih polj danega polja(podanega s koordinatami)
