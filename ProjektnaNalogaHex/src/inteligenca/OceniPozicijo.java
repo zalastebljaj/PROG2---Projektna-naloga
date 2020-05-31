@@ -44,4 +44,28 @@ public class OceniPozicijo {
 		if (jaz == Igralec.R) {return maxDolzinaRdec - 5 * maxDolzinaModer;}
 		else return maxDolzinaModer - 5 * maxDolzinaRdec;
 	}
+
+	// Pomozna funkcija za min v int array 
+	private static int arrayMin(int [] array) { 
+		int min = Integer.MAX_VALUE;
+		for (int a : array) {
+			if (a < min) {min = a;}
+		}
+		return min;
+	}
+	
+	/**
+	 * Ideja za oceno pozicije 
+	 * -> Sebi zmanjšam najkrajpšo pot
+	 * -> Nasprotniku podaljšam najkrajšo pot èe je mogoèe
+	 * -> V koliko potezah lahko zmagam ???
+	 */
+	
+	public static int oceniPozicijoDva(Igra igra, Igralec jaz) {
+//		Polje[][] plosca = igra.getPlosca();
+//		LinkedList<Koordinati> odigrane = igra.odigranePoteze;
+		int [] najkrajsePoti = igra.najkrajsePoti(igra, jaz);
+		int trenutniMin = arrayMin(najkrajsePoti); 
+		return trenutniMin;
+	}
 }

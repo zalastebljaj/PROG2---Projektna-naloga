@@ -117,19 +117,25 @@ public class Igra {
 		int y = t.getY(); 
 		obiskani.add(t);
 		if (jaz == Igralec.R) {
+			
+			// Èe je polje na robu R že zasedeno z M
 			if (y == 0 && igra.plosca[x][0] == Polje.M) {return Integer.MAX_VALUE;} 
-			if (y != N - 1) {
+			
+			// Kaj naredi na poljubnem polju do zadnje vrste
+			else if (y != N - 1) {
 				if (igra.plosca[x][y] == Polje.PRAZNO) {
-					return najkrajsaPot = 1 + najkrajsaPot(new Koordinati(x, y), igra, jaz, obiskani);
+					return najkrajsaPot = 1 + najkrajsaPot(t, igra, jaz, obiskani);
 				}
 				else if (igra.plosca[x][y] == Polje.R) {
-					return najkrajsaPot = najkrajsaPot(new Koordinati(x, y), igra, jaz, obiskani);
+					return najkrajsaPot = najkrajsaPot(t, igra, jaz, obiskani);
 				}
 				else {
 					return Integer.MAX_VALUE;
 				}
 			}
-			if (y == N - 1) { 
+			
+			// Kaj naredi na zadnji vrsti
+			else { 
 				if (igra.plosca[x][y] == Polje.PRAZNO) {
 					return najkrajsaPot += 1;
 				}
@@ -140,19 +146,25 @@ public class Igra {
 			}
 		}
 		else {
-			if (x == 0 && igra.plosca[0][y] == Polje.R) {return Integer.MAX_VALUE;} 
-			if (x != N - 1) {
+			
+			// Èe je polje na robu R že zasedeno z M
+			if (x == 0 && igra.plosca[0][y] == Polje.M) {return Integer.MAX_VALUE;} 
+			
+			// Kaj naredi na poljubnem polju do zadnje vrste
+			else if (x != N - 1) {
 				if (igra.plosca[x][y] == Polje.PRAZNO) {
-					return najkrajsaPot = 1 + najkrajsaPot(new Koordinati(x, y), igra, jaz, obiskani);
+					return najkrajsaPot = 1 + najkrajsaPot(t, igra, jaz, obiskani);
 				}
 				else if (igra.plosca[x][y] == Polje.M) {
-					return najkrajsaPot = najkrajsaPot(new Koordinati(x, y), igra, jaz, obiskani);
+					return najkrajsaPot = najkrajsaPot(t, igra, jaz, obiskani);
 				}
 				else {
 					return Integer.MAX_VALUE;
 				}
 			}
-			if (x == N - 1) { 
+			
+			// Kaj naredi na zadnji vrsti
+			else { 
 				if (igra.plosca[x][y] == Polje.PRAZNO) {
 					return najkrajsaPot += 1;
 				}
@@ -162,7 +174,6 @@ public class Igra {
 				else {return Integer.MAX_VALUE;}
 			}
 		}
-		return 0;
 	}
 	
 	public int najmanjsiOd(LinkedList<Koordinati> sosedi, Igra igra, Igralec jaz, LinkedList<Koordinati> obiskani) { 
@@ -182,27 +193,17 @@ public class Igra {
 		for (Koordinati obiskan : obiskani) {
 			if (sosedi.contains(obiskan)) {sosedi.remove(obiskan);}
 		}
-//		System.out.println(sosedi);
-		najkrajsaPot += najmanjsiOd(sosedi, igra, jaz, obiskani);
-//		int moznaPolja = sosedi.size(); 
-//		if (moznaPolja == 0) {
-//			Koordinati t = sosedi.getFirst();
-//			najkrajsaPot += moznosti(najkrajsaPot, t, igra, jaz);
-//			}
-//		else {
-//			Koordinati t1 = sosedi.getFirst();
-//			Koordinati t2 = sosedi.getLast(); 
-//			najkrajsaPot += Math.min(moznosti(najkrajsaPot, t1, igra, jaz),
-//					moznosti(najkrajsaPot, t2, igra, jaz)); 
-//			
-//		}
+		najkrajsaPot = najmanjsiOd(sosedi, igra, jaz, obiskani);
 		return najkrajsaPot; 
 	}
 	
-	// Funkcija ki vrne array s najmanjšim številom potez za dokonèanje poti iz posamezen koordinate
+	/**
+	 * @param igra
+	 * @param jaz
+	 * @return seznam najkrajših poti iz posamezenga polja
+	 */
 	public int[] najkrajsePoti(Igra igra, Igralec jaz) {
 		int[] najkrajsePoti = new int [N];
-		
 		if (jaz == Igralec.R) {
 			for (int i = 0; i < N; i++) {
 				LinkedList<Koordinati> obiskani = new LinkedList<Koordinati>();
@@ -222,7 +223,7 @@ public class Igra {
 					najkrajsePoti[j] = 1 + najkrajsaPot(new Koordinati(0, j), igra, jaz, obiskani); 
 				}
 				else if (igra.plosca[0][j] == Polje.M) {
-					najkrajsePoti[j] += najkrajsaPot(new Koordinati(j, 0), igra, jaz, obiskani);
+					najkrajsePoti[j] += najkrajsaPot(new Koordinati(0, j), igra, jaz, obiskani);
 				}
 				else {najkrajsePoti[j] = Integer.MAX_VALUE;}
 			}
@@ -230,7 +231,8 @@ public class Igra {
 		return najkrajsePoti;
 	}
 
-	/**Pomozna funkcija, ki sproti preverja ali je kaksno od sosednjih polj danega polja(podanega s koordinatami)
+	/*
+	 * Pomozna funkcija, ki sproti preverja ali je kaksno od sosednjih polj danega polja(podanega s koordinatami)
 	 * od istega igralca in tako gradi seznam vseh polj, ki so iste barve in so povezana z zacetnim poljem
 	 * (seznam koordinat vseh takih polj)
 	 */
@@ -356,6 +358,7 @@ public class Igra {
 		else return false;
 	}
 	
+	
 	public boolean odigrajVKopiji(Koordinati k) {
 		if (plosca[k.getX()][k.getY()] == Polje.PRAZNO) {
 			plosca[k.getX()][k.getY()] = naPotezi.getPolje();
@@ -372,14 +375,15 @@ public class Igra {
 		odigranePoteze.removeLast();
 		naPotezi = naPotezi.nasprotnik();
 	}
-	
+
 	public void razveljavi_ClovekRacunalnik() {
 		Koordinati k = odigranePoteze.getLast(); 
 		plosca[k.getX()][k.getY()] = Polje.PRAZNO; 
 		odigranePoteze.removeLast();
-		//Koordinati K = odigranePoteze.getLast(); 
-		plosca[k.getX()][k.getY()] = Polje.PRAZNO; 
+		Koordinati K = odigranePoteze.getLast(); 
+		plosca[K.getX()][K.getY()] = Polje.PRAZNO; 
 		odigranePoteze.removeLast();
 	}
 
 }
+

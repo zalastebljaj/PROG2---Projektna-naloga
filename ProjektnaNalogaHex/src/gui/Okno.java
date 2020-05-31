@@ -187,7 +187,7 @@ public class Okno extends JFrame implements ActionListener{
 		else {
 			switch(Vodja.igra.stanje()) {
 			case V_TEKU:
-				status.setText("Na potezi je " + Vodja.imeIgralca.get(Vodja.igra.naPotezi));
+				status.setText("Na potezi je " + Vodja.imeIgralca.get(Vodja.igra.naPotezi) + " - " + Vodja.vrstaIgralca.get(Vodja.igra.naPotezi));
 				break;
 			case ZMAGA_R:
 				status.setText("Zmaga R");
