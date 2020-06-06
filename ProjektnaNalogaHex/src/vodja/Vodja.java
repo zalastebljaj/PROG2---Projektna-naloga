@@ -66,17 +66,11 @@ public class Vodja {
 	
 	public static void igramo() {
 		okno.osveziGUI();
-<<<<<<< HEAD
 		System.out.println("Najkrajše poti za " + Vodja.imeIgralca.get(Igralec.R));
 		System.out.println(Arrays.toString(igra.najkrajsePoti(igra, Igralec.R)));
 		System.out.println("Najkrajše poti za " + Vodja.imeIgralca.get(Igralec.M));
 		System.out.println(Arrays.toString(igra.najkrajsePoti(igra, Igralec.M)));
 		System.out.println("");
-=======
-//		System.out.println("Najkrajše poti za " + Vodja.imeIgralca.get(Vodja.igra.naPotezi));
-//		System.out.println(Arrays.toString(igra.najkrajsePoti(igra, Vodja.igra.naPotezi)));
-//		System.out.println("");
->>>>>>> branch 'master' of https://github.com/zalastebljaj/PROG2-ProjektnaNaloga.git
 		switch (igra.stanje()) {
 		case ZMAGA_R :
 		case ZMAGA_M :
