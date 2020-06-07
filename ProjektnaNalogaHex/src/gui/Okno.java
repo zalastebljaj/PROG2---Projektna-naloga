@@ -15,7 +15,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import vodja.Vodja;
-import vodja.VrstaIgralca;
 
 @SuppressWarnings("serial")
 public class Okno extends JFrame implements ActionListener{
@@ -88,7 +87,7 @@ public class Okno extends JFrame implements ActionListener{
 		polje_layout.weighty = 1.0;
 		getContentPane().add(polje, polje_layout);
 		
-		// Status 
+		// Statusna vrstica
 		status = new JLabel();
 		GridBagConstraints status_layout = new GridBagConstraints(); 
 		status_layout.gridx = 0; 
@@ -96,7 +95,7 @@ public class Okno extends JFrame implements ActionListener{
 		status_layout.anchor = GridBagConstraints.CENTER;
 		getContentPane().add(status, status_layout); 
 		
-		status.setText("Izberite igro!");
+		status.setText("Zaèni igro!");
 		
 	}
 	
@@ -110,21 +109,25 @@ public class Okno extends JFrame implements ActionListener{
 			Vodja.igramoNovoIgro();
 		}
 		else if (e.getSource() == CR) {
+			// Spremenim privzete nastavitve in zaènem novo igro 
 			Vodja.igralec1 = vodja.VrstaIgralca.CLOVEK;
 			Vodja.igralec2 = vodja.VrstaIgralca.RACUNALNIK;
 			Vodja.igramoNovoIgro();
 		}
 		else if (e.getSource() == RC) {
+			// Spremenim privzete nastavitve in zaènem novo igro 
 			Vodja.igralec1 = vodja.VrstaIgralca.RACUNALNIK;
 			Vodja.igralec2 = vodja.VrstaIgralca.CLOVEK;
 			Vodja.igramoNovoIgro();
 		}
 		else if (e.getSource() == RR) {
+			// Spremenim privzete nastavitve in zaènem novo igro 
 			Vodja.igralec1 = vodja.VrstaIgralca.RACUNALNIK;
 			Vodja.igralec2 = vodja.VrstaIgralca.RACUNALNIK;
 			Vodja.igramoNovoIgro();
 		}
 		else if (e.getSource() == velikost) {
+			// Spremenim velikost igralnega polja in zaènem novo igro z enakimi igralci kot prej
 			Vodja.N = Integer.parseInt(JOptionPane.showInputDialog("Velikost igralnega polja: "));
 			Vodja.igramoNovoIgro();
 		}
@@ -143,7 +146,8 @@ public class Okno extends JFrame implements ActionListener{
 			}
 		}
 		else if (e.getSource() == algoritemIgranja) { 
-			String[] options = {"MiniMax", "AlphaBeta"};
+			// Ali naj raèunalnik igra nakljuèno ali z AlphaBeta algoritmom
+			String[] options = {"Nakljuèno", "AlphaBeta"};
 	        String algoritem = (String)JOptionPane.showInputDialog(null, "S katerim Algoritmom naj igra raèunalnik",
 	                null, JOptionPane.QUESTION_MESSAGE, null, options, null);
 	        Vodja.algoritem = algoritem;
@@ -167,6 +171,7 @@ public class Okno extends JFrame implements ActionListener{
 			}
 		}
 		else if (e.getSource() == razveljavi) {
+			// Razveljavim zadnjo potezo
 			if (Vodja.igra != null) {
 				if (Vodja.igralec1 == Vodja.igralec2 && Vodja.igralec1 == vodja.VrstaIgralca.CLOVEK) {
 					Vodja.igra.razveljavi();
@@ -190,10 +195,10 @@ public class Okno extends JFrame implements ActionListener{
 				status.setText("Na potezi je " + Vodja.imeIgralca.get(Vodja.igra.naPotezi) + " - " + Vodja.vrstaIgralca.get(Vodja.igra.naPotezi));
 				break;
 			case ZMAGA_R:
-				status.setText("Zmaga R");
+				status.setText("Zmaga R - " + Vodja.imeIgralca.get(Vodja.igra.zmagovalec));
 				break;
 			case ZMAGA_M:
-				status.setText("Zmaga M");
+				status.setText("Zmaga M - " + Vodja.imeIgralca.get(Vodja.igra.zmagovalec));
 				break;
 			}
 		}

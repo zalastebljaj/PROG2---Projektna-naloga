@@ -46,8 +46,8 @@ public class Vodja {
 	public static VrstaIgralca igralec1 = vodja.VrstaIgralca.CLOVEK;
 	public static VrstaIgralca igralec2 = vodja.VrstaIgralca.RACUNALNIK;
 	
-	// Zaèetne nastavitve algoritma - Za zaèetek
-	public static String algoritem = "MiniMax"; 
+	// Zaèetne nastavitve algoritma
+	public static String algoritem = "Nakljuèno"; 
 	
 	//Zacne novo igro  na N*N igralnem polju
 	public static void igramoNovoIgro() {

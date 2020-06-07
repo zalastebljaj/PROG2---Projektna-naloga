@@ -1,6 +1,5 @@
 package gui;
 
-import logika.Igra;
 import splosno.Koordinati;
 import vodja.Vodja;
 
@@ -11,12 +10,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
@@ -33,15 +27,14 @@ public class IgralnoPolje extends JPanel implements MouseListener{
 		return new Dimension(500, 500);
 	}
 	
-	private final static double LINE_WIDTH = 0.2; 
 	
-	
-	// Da je igralno polje v celoti vidno - za silo
+	// velikost stranice
 	private double stranica() {
 		return Math.min(getWidth(), getHeight()) / (4 * Vodja.N);
 	}
 	
-	public int zamik = 50 * Vodja.N / 11;
+	// zamik risanja mreže od roba
+	public int zamik = 50 + Vodja.N / 11;
 	
 	@Override 
 	protected void paintComponent(Graphics g) {
@@ -114,16 +107,14 @@ public class IgralnoPolje extends JPanel implements MouseListener{
 		    	}
 		    }
 	    }
-		else {
-			super.paintComponent(g);
-			Graphics2D g2 = (Graphics2D) g;
-		}
 	}
 
 	public boolean vsebuje(int x0, int y0, int r, int x, int y) {
 		return (x - x0) * (x - x0) + (y - y0) * (y - y0) <= r * r;
 	}
 	
+	
+	// Pogledam kateremu šestkotniku pripadajo koordinate klika
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (Vodja.clovekNaVrsti) {

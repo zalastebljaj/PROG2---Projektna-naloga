@@ -1,6 +1,5 @@
 package inteligenca;
 
-import java.awt.List;
 import java.util.LinkedList;
 
 import logika.Igra;
@@ -62,8 +61,8 @@ public class OceniPozicijo {
 	 */
 	
 	public static int oceniPozicijoDva(Igra igra, Igralec jaz) {
-//		Polje[][] plosca = igra.getPlosca();
-//		LinkedList<Koordinati> odigrane = igra.odigranePoteze;
+		Polje[][] plosca = igra.getPlosca();
+		LinkedList<Koordinati> odigrane = igra.odigranePoteze;
 		int [] najkrajsePoti = igra.najkrajsePoti(igra, jaz);
 		int trenutniMin = arrayMin(najkrajsePoti); 
 		return trenutniMin;

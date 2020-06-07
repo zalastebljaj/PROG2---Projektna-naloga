@@ -176,6 +176,7 @@ public class Igra {
 		}
 	}
 	
+	// Vrne najkrajso mozno pot
 	public int najmanjsiOd(LinkedList<Koordinati> sosedi, Igra igra, Igralec jaz, LinkedList<Koordinati> obiskani) { 
 		int najmanjsiOd = Integer.MAX_VALUE; 
 		for (Koordinati sosed : sosedi) { 
@@ -376,6 +377,7 @@ public class Igra {
 		naPotezi = naPotezi.nasprotnik();
 	}
 
+	// Razveljavi zadnjo potezo, èe igramo èlovek proti raèunalniku
 	public void razveljavi_ClovekRacunalnik() {
 		Koordinati k = odigranePoteze.getLast(); 
 		plosca[k.getX()][k.getY()] = Polje.PRAZNO; 
