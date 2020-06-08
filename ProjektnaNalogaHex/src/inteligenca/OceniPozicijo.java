@@ -63,6 +63,7 @@ public class OceniPozicijo {
 	 * -> V koliko potezah lahko zmagam ???
 	 */
 	
+	// Nedokonèana ideja
 	public static int oceniPozicijoDva(Igra igra, Igralec jaz) {
 		Polje[][] plosca = igra.getPlosca();
 		LinkedList<Koordinati> odigrane = igra.odigranePoteze;
