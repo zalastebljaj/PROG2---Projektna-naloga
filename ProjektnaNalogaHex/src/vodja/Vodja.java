@@ -93,12 +93,13 @@ public class Vodja {
 	private static Random random = new Random();
 	public static Inteligenca racunalnikovaInteligenca = new Inteligenca();
 	
+	
 	public static void racunalnikovaPoteza() {
 		Igra zacetnaIgra = igra;
 		SwingWorker<Koordinati, Void> worker = new SwingWorker<Koordinati, Void> () {
 			@Override
 			protected Koordinati doInBackground() {
-				if (igra.odigranePoteze.size() >= 0) {
+				if (igra.odigranePoteze.size() >= 0 && algoritem == "AlphaBeta") {
 					Koordinati poteza = racunalnikovaInteligenca.izberiPotezo(igra);
 					try {TimeUnit.SECONDS.sleep(1);} catch (Exception e) {};
 					return poteza;
