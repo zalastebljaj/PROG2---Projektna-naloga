@@ -1,16 +1,20 @@
 package vodja;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Random;
+import java.util.LinkedList;
 
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.SwingWorker;
 
-import java.awt.*;
+import java.awt.Color;
 
-import logika.*;
+import logika.Igra;
+import logika.Igralec;
 import splosno.Koordinati;
-import gui.*;
+import gui.Okno;
 import inteligenca.Inteligenca;
 
 public class Vodja {
@@ -26,6 +30,7 @@ public class Vodja {
 	
 	public static Igra igra = null;
 	
+	// Doloca, ali je na vrsti clovek
 	public static boolean clovekNaVrsti = false;
 	
 	//Koliko casa pretece preden racunalnik odigra svojo potezo (zacetna nastavitev je 2 sekundi)
@@ -64,6 +69,7 @@ public class Vodja {
 		igramo();
 	}
 	
+	// Osvezi GUI in preveri stanje igre
 	public static void igramo() {
 		okno.osveziGUI();
 		System.out.println("Najkrajše poti za " + Vodja.imeIgralca.get(Igralec.R));
@@ -93,12 +99,13 @@ public class Vodja {
 	private static Random random = new Random();
 	public static Inteligenca racunalnikovaInteligenca = new Inteligenca();
 	
+	// Odigra racunalnikovo potezo
 	public static void racunalnikovaPoteza() {
 		Igra zacetnaIgra = igra;
 		SwingWorker<Koordinati, Void> worker = new SwingWorker<Koordinati, Void> () {
 			@Override
 			protected Koordinati doInBackground() {
-				if (igra.odigranePoteze.size() >= 0) {
+				if (igra.odigranePoteze.size() > 0) {
 					Koordinati poteza = racunalnikovaInteligenca.izberiPotezo(igra);
 					try {TimeUnit.SECONDS.sleep(1);} catch (Exception e) {};
 					return poteza;
@@ -123,6 +130,7 @@ public class Vodja {
 		worker.execute();
 	}
 	
+	// Odigra clovekovo potezo
 	public static void igrajClovekovoPotezo(Koordinati k) {
 		if (igra.odigraj(k)) clovekNaVrsti = false;
 		igramo();

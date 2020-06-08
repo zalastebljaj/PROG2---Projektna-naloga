@@ -10,6 +10,9 @@ import splosno.Koordinati;
 
 public class OceniPozicijo {
 	
+	/*Metoda, ki ocenjuje pozicijo glede na najdaljsi povezani komponenti rdecega in modrega.
+	 * Za izracun dolzine najdaljse komponente uporablja metodo pot iz razreda Igra
+	 */
 	public static int oceniPozicijo(Igra igra, Igralec jaz) {
 		Polje[][] plosca = igra.getPlosca();
 		LinkedList<Koordinati> odigrane = igra.odigranePoteze;

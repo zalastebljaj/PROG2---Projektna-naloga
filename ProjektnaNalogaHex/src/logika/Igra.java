@@ -1,9 +1,8 @@
 package logika;
 
-import java.util.*;
+import java.util.LinkedList;
 
 import splosno.Koordinati;
-import vodja.Vodja;
 
 public class Igra {
 	
@@ -89,27 +88,8 @@ public class Igra {
 		return mp;
 	}
 	
-	public LinkedList<Koordinati> koordinate = new LinkedList<Koordinati>();
-	public int min = N;
-	public int max = 0;
-	
 	
 	// Delovanje naslednjih funkcij ni optimalno... 
-	
-	//pomozna funkcija, ki vrne vse sosede glede na dane koordinate
-	private LinkedList<Koordinati> sosedi(Koordinati k){
-		int x = k.getX();
-		int y = k.getY();
-		LinkedList<Koordinati> sosedi = new LinkedList<Koordinati>();
-		if (y < N - 1) sosedi.add(new Koordinati(x, y + 1));
-		if (x < N - 1) sosedi.add(new Koordinati(x + 1, y));
-		if (y < N - 1 && x > 0) sosedi.add(new Koordinati(x - 1, y + 1));
-		if (y > 0 && x < N - 1) sosedi.add(new Koordinati(x + 1, y - 1));
-		if (y > 0) sosedi.add(new Koordinati(x, y - 1));
-		if (x > 0) sosedi.add(new Koordinati(x - 1, y));
-		return sosedi;
-	}
-
 	
 	// Pomožna funkcija, ki pogleda možnosti za nadaljevanje poti
 	private int moznosti(int najkrajsaPot, Koordinati t, Igra igra, Igralec jaz, LinkedList<Koordinati> obiskani) {
@@ -231,11 +211,33 @@ public class Igra {
 		}
 		return najkrajsePoti;
 	}
+	
+	//Pomozna funkcija, ki vrne vsa sosednja polja glede na dane koordinate
+	private LinkedList<Koordinati> sosedi(Koordinati k){
+		int x = k.getX();
+		int y = k.getY();
+		LinkedList<Koordinati> sosedi = new LinkedList<Koordinati>();
+		if (y < N - 1) sosedi.add(new Koordinati(x, y + 1));
+		if (x < N - 1) sosedi.add(new Koordinati(x + 1, y));
+		if (y < N - 1 && x > 0) sosedi.add(new Koordinati(x - 1, y + 1));
+		if (y > 0 && x < N - 1) sosedi.add(new Koordinati(x + 1, y - 1));
+		if (y > 0) sosedi.add(new Koordinati(x, y - 1));
+		if (x > 0) sosedi.add(new Koordinati(x - 1, y));
+		return sosedi;
+	}
+	
+	/*Pomozen seznam koordinate, kamor se spravljajo koordinate polj v povezani komponenti, 
+	*zacetni vrednosti min in max
+	*/
+	public LinkedList<Koordinati> koordinate = new LinkedList<Koordinati>();
+	public int min = N;
+	public int max = 0;
 
 	/*
-	 * Pomozna funkcija, ki sproti preverja ali je kaksno od sosednjih polj danega polja(podanega s koordinatami)
-	 * od istega igralca in tako gradi seznam vseh polj, ki so iste barve in so povezana z zacetnim poljem
-	 * (seznam koordinat vseh takih polj)
+	 * Pomozna funkcija, ki s pomocjo pomozne funkcije sosedi sproti preverja ali je kaksno od sosednjih polj 
+	 * danega polja(podanega s koordinatami) od istega igralca in tako gradi seznam vseh polj, ki so iste barve 
+	 * in so povezana z zacetnim poljem (seznam koordinat vseh takih polj)
+	 * Hkrati racuna tudi minimum in maksimum povezane komponente za inteligenco
 	 */
 	public PotMinMax pot(Koordinati t, Polje barva) {
 		if (barva == Polje.R && t.getY() < min) {min = t.getY();}
@@ -261,7 +263,7 @@ public class Igra {
 		return new PotMinMax(koordinate, min, max);
 	}
 	
-	/**S pomocjo pomozne metode pot vrne seznam koordinat vseh enako pobarvanih povezanih polj, ki se drzijo enega od 
+	/*S pomocjo pomozne metode pot vrne seznam koordinat vseh enako pobarvanih povezanih polj, ki se drzijo enega od 
 	 * robov igralne plosce (polja s koordinatami (i, 0) za rdece in (0, j) za modre).
 	 */
 	public LinkedList<Koordinati> zmagovalnaPot() {
@@ -317,7 +319,7 @@ public class Igra {
 		return null;
 	}
 	
-	/**Preveri ali se polja iz metode zmagovalnaPot drzijo nasprotnega roba in vrne igralca, ki je zmagal, 
+	/*Preveri ali se polja iz metode zmagovalnaPot drzijo nasprotnega roba in vrne igralca, ki je zmagal, 
 	* èe obstaja, drugace vrne null.
 	*/
 	public Polje zmagovalec() {
@@ -359,7 +361,7 @@ public class Igra {
 		else return false;
 	}
 	
-	
+	//Poskusa odigrati potezo v kopiji(ne dodaja v odigranePoteze), ce poteza ni veljavna vrne false
 	public boolean odigrajVKopiji(Koordinati k) {
 		if (plosca[k.getX()][k.getY()] == Polje.PRAZNO) {
 			plosca[k.getX()][k.getY()] = naPotezi.getPolje();

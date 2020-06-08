@@ -1,7 +1,6 @@
 package inteligenca;
 
 import java.util.List;
-import java.util.Random;
 import java.util.LinkedList;
 
 import splosno.KdoIgra;
@@ -11,6 +10,7 @@ import logika.Igralec;
 
 public class Inteligenca extends KdoIgra{
 	
+	//Konstanti za zmago in poraz
 	private static final int ZMAGA = Integer.MAX_VALUE;
 	private static final int PORAZ = -ZMAGA;
 	
@@ -20,7 +20,7 @@ public class Inteligenca extends KdoIgra{
 	//Konstruktor za tekmovanje
 	public Inteligenca() {
 		super("Ime");
-		this.globina = 7;//??
+		this.globina = 7;
 	}
 	
 	//Konstruktor za testiranje, ki sprejme parmeter globine
@@ -34,6 +34,7 @@ public class Inteligenca extends KdoIgra{
 		return alphabetaPoteze(igra, this.globina, PORAZ, ZMAGA, igra.naPotezi()).poteza;
 	}
 	
+	//Vrne najboljso ocenjeno potezo, glede na dane parametre
 	public static OcenjenaPoteza alphabetaPoteze(Igra igra, int globina, int alpha, int beta, Igralec jaz) {
 		int ocena;
 		if (igra.naPotezi() == jaz) {ocena = PORAZ;} else {ocena = ZMAGA;}
@@ -72,6 +73,7 @@ public class Inteligenca extends KdoIgra{
 		return new OcenjenaPoteza (kandidat, ocena);
 	}
 	
+	// Vrne seznam najboljse ocenjenih potez
 	private static LinkedList<OcenjenaPoteza> najboljse(Igra igra, int globina, Igralec jaz) {
 		LinkedList<OcenjenaPoteza> naj = new LinkedList<OcenjenaPoteza>();
 		LinkedList<Koordinati> moznePoteze = igra.moznePoteze();
@@ -90,6 +92,7 @@ public class Inteligenca extends KdoIgra{
 		return naj;
 	}
 	
+	// Zamenja najmanjsi element iz seznama z drugim, ce je manjsi
 	private static LinkedList<OcenjenaPoteza> replaceMinIf(LinkedList<OcenjenaPoteza> naj, OcenjenaPoteza p) {
 		OcenjenaPoteza min = naj.get(0);
 		int indeks = 0;
