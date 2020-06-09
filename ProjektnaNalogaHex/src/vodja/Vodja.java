@@ -1,7 +1,6 @@
 package vodja;
 
 import java.util.HashMap;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.LinkedList;
 
@@ -72,11 +71,6 @@ public class Vodja {
 	// Osvezi GUI in preveri stanje igre
 	public static void igramo() {
 		okno.osveziGUI();
-		System.out.println("Najkrajše poti za " + Vodja.imeIgralca.get(Igralec.R));
-		System.out.println(Arrays.toString(igra.najkrajsePoti(igra, Igralec.R)));
-		System.out.println("Najkrajše poti za " + Vodja.imeIgralca.get(Igralec.M));
-		System.out.println(Arrays.toString(igra.najkrajsePoti(igra, Igralec.M)));
-		System.out.println("");
 		switch (igra.stanje()) {
 		case ZMAGA_R :
 		case ZMAGA_M :
